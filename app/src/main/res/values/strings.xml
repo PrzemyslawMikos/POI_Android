@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">POI_Android</string>
+    <string name="login_dialog_text">Logowanie...</string>
+    <string name="register_dialog_text">Rejestracja...</string>
+    <string name="login_snackbar_bad_credentials">Nie zalogowano. Błędne dane logowania.</string>
 </resources>
