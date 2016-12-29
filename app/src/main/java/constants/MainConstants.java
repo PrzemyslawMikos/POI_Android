@@ -9,6 +9,7 @@ public interface MainConstants {
     // Współdzielone preferencje
     String PREFERENCES_NAME = "PoiAndroid";
     String PREFERENCE_USERNAME = "username";
+    String PREFERENCE_USERID = "userid";
     String PREFERENCE_PASSWORD = "password";
     String PREFERENCE_TOKEN = "token";
 

@@ -1,5 +1,6 @@
 package com.adventure.poi.poi_android;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,11 +15,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import additional.SharedPreferencesManager;
-import additional.TaskDelegate;
+import additional.RestTaskDelegate;
 import constants.MainConstants;
 import constants.RestConstants;
 import entity.TokenEntity;
+import entity.UserEntity;
 import rest.RestHelper;
+import rest.UsersHelper;
 
 public class LoginActivity extends AppCompatActivity implements RestConstants, MainConstants {
 
@@ -45,26 +48,19 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        restHelper = new RestHelper(REST_TOKEN_POST, HttpMethod.POST, headers, request, LoginActivity.this, getResources().getString(R.string.login_dialog_text), new TaskDelegate() {
+        restHelper = new RestHelper(REST_TOKEN_POST, HttpMethod.POST, headers, request, LoginActivity.this, getResources().getString(R.string.login_dialog_text), new RestTaskDelegate() {
             @Override
             public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-                if(CheckData(result))
-                    // do głownego widoku
-                    return;
+                if(CheckData(result)) {
+                    Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                    startActivity(intent);
+                }
                 else
                     Snackbar.make(findViewById(R.id.activity_login), R.string.login_snackbar_bad_credentials, Snackbar.LENGTH_LONG).show();
             }
         });
         restHelper.runTask();
 
-//        PointsHelper ph = new PointsHelper(LoginActivity.this, new TaskDelegate() {
-//            @Override
-//            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-//                Snackbar.make(findViewById(R.id.activity_login), "Pobrano punkt", Snackbar.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        ph.getPointById("Pobieranie...", Long.valueOf(1));
     }
 
     private void SaveCredentials(){
@@ -79,6 +75,7 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
                 TokenEntity token = new TokenEntity(jtoken);
                 SharedPreferencesManager prefManager = new SharedPreferencesManager(LoginActivity.this);
                 prefManager.setKeyValue(MainConstants.PREFERENCE_TOKEN, token.getToken());
+                prefManager.setKeyValue(MainConstants.PREFERENCE_USERID, token.getUserId());
                 if(checkBoxRememberMe.isChecked()){
                     SaveCredentials();
                 }

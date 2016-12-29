@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Login"
+        android:text="user"
         android:ems="10"
         android:layout_below="@+id/textViewLogin"
         android:layout_alignParentStart="true"
@@ -41,7 +41,8 @@
         android:layout_marginTop="39dp"
         android:id="@+id/editTextPassword"
         android:selectAllOnFocus="false"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:text="user" />
 
     <Button
         android:text="Zaloguj"

@@ -3,7 +3,15 @@ package rest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.Toast;
+
+import com.adventure.poi.poi_android.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -12,13 +20,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import additional.TaskDelegate;
+
+import additional.NetworkStateManager;
+import additional.RestTaskDelegate;
 
 /**
  * Created by Przemek on 04.12.2016.
  */
 
-public class RestHelper implements TaskDelegate {
+public class RestHelper implements RestTaskDelegate {
 
     private String urlPath;
     private HttpMethod requestMethod;
@@ -28,10 +38,10 @@ public class RestHelper implements TaskDelegate {
     private String loadDialogMessage;
     private ResponseEntity<String> responseEntity;
     private Boolean result;
-    private TaskDelegate delegate;
+    private RestTaskDelegate delegate;
     private HttpClientErrorException exception;
 
-    public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, JSONObject requestBody, Activity activity, String loadDialogMessage, TaskDelegate delegate) {
+    public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, JSONObject requestBody, Activity activity, String loadDialogMessage, RestTaskDelegate delegate) {
         this.urlPath = urlPath;
         this.requestMethod = requestMethod;
         this.requestHeader = requestHeader;
@@ -42,7 +52,7 @@ public class RestHelper implements TaskDelegate {
         this.delegate = delegate;
     }
 
-    public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, Activity activity, String loadDialogMessage, TaskDelegate delegate) {
+    public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, Activity activity, String loadDialogMessage, RestTaskDelegate delegate) {
         this.urlPath = urlPath;
         this.requestMethod = requestMethod;
         this.requestHeader = requestHeader;
@@ -66,8 +76,21 @@ public class RestHelper implements TaskDelegate {
     }
 
     public void runTask() {
-        RestTask restTask = new RestTask(activity, this);
-        restTask.execute();
+        NetworkStateManager networkState = new NetworkStateManager();
+        if(networkState.isNetworkAvailable(activity)){
+            RestTask restTask = new RestTask(activity, this);
+            restTask.execute();
+        }
+        else{
+            View view = activity.findViewById(android.R.id.content);
+            Snackbar.make(view, activity.getResources().getString(R.string.enable_network_text), Snackbar.LENGTH_LONG).setAction(activity.getResources().getString(R.string.settings_text), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                    activity.startActivity(intent);
+                }
+            }).show();
+        }
     }
 
     @Override
@@ -80,9 +103,9 @@ public class RestHelper implements TaskDelegate {
 
         private ProgressDialog dialog;
         private Context context;
-        private TaskDelegate delegate;
+        private RestTaskDelegate delegate;
 
-        public RestTask(Activity activity, TaskDelegate delegate) {
+        public RestTask(Activity activity, RestTaskDelegate delegate) {
             context = activity;
             dialog = new ProgressDialog(context);
             this.delegate = delegate;
@@ -98,7 +121,7 @@ public class RestHelper implements TaskDelegate {
             try {
                 RestTemplate restTemplate = new RestTemplate();
                 HttpEntity<String> entity;
-                // Żądanie get nie wymaga zawartości
+                // Żądanie GET nie posiada zawartości
                 if(requestMethod != HttpMethod.GET) {
                     entity = new HttpEntity<>(requestBody.toString(), requestHeader);
                 }

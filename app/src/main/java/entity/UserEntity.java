@@ -5,24 +5,41 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+import constants.RestConstants;
+
 /**
  * Created by Przemek on 12.12.2016.
  */
 
-public class UserEntity {
+public class UserEntity implements RestConstants {
 
     private Integer id;
+    private Integer permissionid;
     private String nickname;
     private String email;
     private String phone;
     private String username;
     private String password;
-    private Date creationdate;
+    private String creationdate;
     private Boolean firstlogin;
     private Boolean unblocked;
 
+
+    public UserEntity(JSONObject jUser) throws JSONException {
+        this.id = jUser.getInt(JSON_ID_KEY);
+        this.permissionid = jUser.getInt(JSON_PERMISSIONID_KEY);
+        this.nickname = jUser.getString(JSON_NICKNAME_KEY);
+        this.email = jUser.getString(JSON_EMAIL_KEY);
+        this.phone = jUser.getString(JSON_PHONE_KEY);
+        this.username = jUser.getString(JSON_USERNAME_KEY);
+        this.creationdate = jUser.getString(JSON_CREATIONDATE_KEY);
+        this.firstlogin = jUser.getBoolean(JSON_FIRSTLOGIN_KEY);
+        this.unblocked = jUser.getBoolean(JSON_UNBLOCKED_KEY);
+    }
+
     public UserEntity(String nickname, String email, String phone, String username, String password) {
         this.id = null;
+        this.permissionid = null;
         this.creationdate = null;
         this.firstlogin = null;
         this.unblocked = null;
@@ -53,6 +70,14 @@ public class UserEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getPermissionid() {
+        return permissionid;
+    }
+
+    public void setPermissionid(Integer permissionid) {
+        this.permissionid = permissionid;
     }
 
     public String getNickname() {
@@ -95,11 +120,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Date getCreationdate() {
+    public String getCreationdate() {
         return creationdate;
     }
 
-    public void setCreationdate(Date creationdate) {
+    public void setCreationdate(String creationdate) {
         this.creationdate = creationdate;
     }
 

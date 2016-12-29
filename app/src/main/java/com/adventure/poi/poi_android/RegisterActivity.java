@@ -13,14 +13,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import additional.TaskDelegate;
+import additional.RestTaskDelegate;
 import constants.MainConstants;
 import constants.RestConstants;
 import entity.StatusEntity;
 import entity.UserEntity;
 import rest.RestHelper;
 
-public class RegisterActivity extends AppCompatActivity implements RestConstants, TaskDelegate, MainConstants {
+public class RegisterActivity extends AppCompatActivity implements RestConstants, RestTaskDelegate, MainConstants {
 
     private RestHelper restHelper;
     private EditText editNickname, editEmail, editPhone, editUsername, editPassword;
