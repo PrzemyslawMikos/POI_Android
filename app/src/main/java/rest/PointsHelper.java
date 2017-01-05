@@ -2,6 +2,8 @@ package rest;
 
 import android.app.Activity;
 import android.widget.Toast;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
-import additional.RestTaskDelegate;
+import delegates.RestTaskDelegate;
 import entity.PointEntity;
 import entity.StatusEntity;
 
@@ -41,6 +43,31 @@ public class PointsHelper extends EntityHelper{
                         JSONObject jpoint= new JSONObject(spoint);
                         PointEntity point = new PointEntity(jpoint);
                         points.add(point);
+                    }
+                }
+                else{
+                    Toast.makeText(PointsHelper.super.getActivity(), "Wyjatek: " + restHelper.getException().getStatusCode().toString(), Toast.LENGTH_LONG).show();
+                }
+                PointsHelper.super.getDelegate().TaskCompletionResult(restHelper.getResponseEntity());
+            }
+        });
+        restHelper.runTask();
+    }
+
+    public void getPointsCriteria(String message, int typeid, String locality, int limit, int offset){
+        HttpHeaders header = getHeaderWithBearer();
+        restHelper = new RestHelper(String.format(REST_POINTS_CRITERIA, typeid, locality, limit, offset), HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
+            @Override
+            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                if(restHelper.getResult()) {
+                    if (restHelper.getResponseEntity().getStatusCode() == HttpStatus.OK) {
+                        String spointsarray = restHelper.getResponseEntity().getBody();
+                        JSONArray jpointsarray= new JSONArray(spointsarray);
+                        for (int i = 0; i < jpointsarray.length(); i++) {
+                            JSONObject jpoint = jpointsarray.getJSONObject(i);
+                            PointEntity type = new PointEntity(jpoint);
+                            points.add(type);
+                        }
                     }
                 }
                 else{

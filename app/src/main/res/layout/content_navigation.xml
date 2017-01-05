@@ -10,13 +10,15 @@
     tools:showIn="@layout/app_bar_navigation">
     <ScrollView
         android:id="@+id/scrollView1"
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:id="@+id/content_navigation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorAccent"
             android:orientation="vertical">
         </LinearLayout>
     </ScrollView>

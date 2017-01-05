@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">POI_Android</string>
-    <string name="login_dialog_text">Logowanie...</string>
-    <string name="register_dialog_text">Rejestracja...</string>
-    <string name="login_snackbar_bad_credentials">Nie zalogowano. Błędne dane logowania.</string>
+    <string name="app_name">POI</string>
+    <string name="server_exception">Błąd serwera, sprubój ponownie póżniej.</string>
 
+    <string name="login_dialog_text">Logowanie...</string>
+    <string name="login_snackbar_bad_credentials">Nie zalogowano. Błędne dane logowania.</string>
+    <string name="login_bad_data">Złe dane logowania.</string>
+
+    <string name="register_dialog_text">Rejestracja...</string>
+    <string name="register_username_exist">Taka nazwa użytkownika już istnieje.</string>
+    <string name="register_email_exist">Taki adres email już istnieje.</string>
+    
     <string name="enable_network_text">Musisz mieć dostęp do internetu.\nWłącz Wi-Fi lub dane komórkowe.</string>
     <string name="settings_text">Ustawienia</string>
 

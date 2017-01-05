@@ -3,13 +3,8 @@ package com.adventure.poi.poi_android;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,11 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,24 +32,35 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import additional.ImageManager;
-import additional.ImageTaskDelegate;
-import additional.RestTaskDelegate;
+import delegates.ImageTaskDelegate;
+import additional.PointsRowAdapter;
+import delegates.RestTaskDelegate;
 import additional.SharedPreferencesManager;
 import constants.MainConstants;
 import constants.RestConstants;
+import entity.PointEntity;
 import entity.TypeEntity;
 import entity.UserEntity;
+import rest.PointsHelper;
 import rest.TypesHelper;
 import rest.UsersHelper;
 
-import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
+import static android.widget.Toast.makeText;
 
 public class NavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, RestConstants, MainConstants{
     private TypesHelper th;
     private UsersHelper usersHelper;
+    private PointsHelper ph;
     private ImageView views;
+    private int currentFirstVisibleItem, currentVisibleItemCount, currentScrollState;
     private int margin = 0;
+    private int offset = 0;
+    private int limit = 10;
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,19 +179,80 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_gallery) {
             showPoint();
         } else if (id == R.id.nav_slideshow) {
-
+            showListPointss();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
             displayUserData();
 
         } else if (id == R.id.nav_send) {
-
+            logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+
+    private void showListPointss(){
+       ph = new PointsHelper(NavigationActivity.this, new RestTaskDelegate() {
+            @Override
+            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                showListPoints(ph.getPoints());
+            }
+        });
+        ph.getPointsCriteria("Wyszukiwanie punktów", 1, "Miejscowosc", limit, offset);
+    }
+
+    private void showListPoints(ArrayList<PointEntity> points){
+        clearContentView();
+        LinearLayout ll = (LinearLayout) findViewById(R.id.content_navigation);
+        LayoutInflater linflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView;
+        customView = linflater.inflate(R.layout.view_points, null);
+        ll.addView(customView);
+        PointsRowAdapter adapter = new PointsRowAdapter(this, R.layout.row_list_points, points);
+        ListView Lview = (ListView) findViewById(R.id.listViewPoints);
+        Lview.setAdapter(adapter);
+        Lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(NavigationActivity.this, "kliknieto: " + Integer.toString(position), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        Lview.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                currentScrollState = scrollState;
+                isScrollCompleted();
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                currentFirstVisibleItem = firstVisibleItem;
+                currentVisibleItemCount = visibleItemCount;
+            }
+        });
+
+
+        Button btn = (Button) findViewById(R.id.buttonNextPage);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offset += 10;
+                showListPointss();
+            }
+        });
+    }
+
+    private void isScrollCompleted() {
+        if (this.currentVisibleItemCount > 0 && this.currentScrollState == SCROLL_STATE_IDLE) {
+            limit += 10;
+            showListPointss();
+        }
     }
 
     private void showPoint(){
@@ -218,4 +287,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         textView.setText("Nick: " + user.getNickname() + "\nNazwa użytkownika: " + user.getUsername() + "\nEmail: " + user.getEmail() + "\nTelefon: " + user.getPhone() + "\nData rejestracji: " + user.getCreationdate());
     }
 
+
+
+    private void logout(){
+        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
+        sharedPreferencesManager.unsetCredentials();
+        Intent intent = new Intent(NavigationActivity.this, LoginActivity.class);
+        this.finish();
+        startActivity(intent);
+    }
 }

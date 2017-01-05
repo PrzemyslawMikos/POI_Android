@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import additional.RestTaskDelegate;
+import delegates.RestTaskDelegate;
 import entity.TypeEntity;
 
 /**

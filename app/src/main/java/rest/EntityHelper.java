@@ -5,7 +5,7 @@ import android.util.Log;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import additional.SharedPreferencesManager;
-import additional.RestTaskDelegate;
+import delegates.RestTaskDelegate;
 import constants.MainConstants;
 import constants.RestConstants;
 import entity.StatusEntity;

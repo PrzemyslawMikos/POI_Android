@@ -13,4 +13,6 @@ public interface MainConstants {
     String PREFERENCE_PASSWORD = "password";
     String PREFERENCE_TOKEN = "token";
 
+    // Uprawnienia
+    int PERMISSION = 1;
 }

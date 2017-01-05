@@ -6,10 +6,12 @@ package constants;
 
 public interface RestConstants {
 
+    // Główna sciezka hosta
+    String REST_MAIN_HOST_PATH = "http://192.168.50.102";
     // Sciezki Rest API
-    String REST_ROOT_PATH = "http://192.168.1.2/POI/Web/app_dev.php/api";
+    String REST_ROOT_PATH = REST_MAIN_HOST_PATH + "/POI/Web/app_dev.php/api";
     // Sciezka zdjęć
-    String REST_IMAGE_PATH = "http://192.168.1.2/POI/Web/uploads";
+    String REST_IMAGE_PATH = REST_MAIN_HOST_PATH +"/POI/Web/uploads";
     // Sciezka zdjęć typów
     String REST_TYPES_IMAGE = REST_IMAGE_PATH + "/types/%1$s";
     // Sciezka zdjęć punktów
@@ -20,6 +22,8 @@ public interface RestConstants {
     String REST_REGISTER_POST = REST_ROOT_PATH + "/register";
     // Pobranie punktu po id
     String REST_POINTS_GET_ID = REST_ROOT_PATH + "/point/%1$d";
+    // Pobranie punktu według kryteriów, 1 = id typu, 2 = miejscowosc, 3 = limit, 4 = offset
+    String REST_POINTS_CRITERIA = REST_ROOT_PATH + "/points/%1$d/%2$s/%3$d/%4$d";
     // Dodanie punktu
     String REST_POINTS_POST = REST_ROOT_PATH + "/point";
     // Pobranie wszystkich typow
@@ -33,7 +37,7 @@ public interface RestConstants {
 
     // Atrybuty odpowiedzi i żądań JSON
     String JSON_TOKEN_KEY = "token";
-    String JSON_STATUS_KEY = "status";
+    String JSON_STATUS_KEY = "STATUS";
     String JSON_USERNAME_KEY = "username";
     String JSON_PASSWORD_KEY = "password";
     String JSON_NICKNAME_KEY = "nickname";
@@ -43,6 +47,7 @@ public interface RestConstants {
     String JSON_LONGITUDE_KEY = "longitude";
     String JSON_LATITUDE_KEY = "latitude";
     String JSON_NAME_KEY = "name";
+    String JSON_LOCALITY_KEY = "locality";
     String JSON_DESCRIPTION_KEY = "description";
     String JSON_PICTURE_KEY = "picture";
     String JSON_IMAGE_KEY = "image";
@@ -54,4 +59,12 @@ public interface RestConstants {
     String JSON_PERMISSIONID_KEY = "permissionid";
     String JSON_FIRSTLOGIN_KEY = "firstlogin";
     String JSON_UNBLOCKED_KEY = "unblocked";
+
+    // Informacje zwracane przez serwer
+    String STATUS_OK = "OK";
+    String STATUS_WRONG_PARAMS = "WRONG_PARAMS";
+    String STATUS_BAD_CREDENTIALS = "BAD_CREDENTIALS";
+    String STATUS_USERNAME_EXIST = "USERNAME_EXIST";
+    String STATUS_EMAIL_EXIST = "EMAIL_EXIST";
+    String STATUS_INTERNAL_SERVER_ERROR = "INTERNAL_ERROR";
 }

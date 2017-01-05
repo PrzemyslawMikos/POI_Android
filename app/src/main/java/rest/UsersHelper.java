@@ -3,7 +3,6 @@ package rest;
 import android.app.Activity;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
@@ -12,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import additional.RestTaskDelegate;
-import entity.TypeEntity;
+import delegates.RestTaskDelegate;
 import entity.UserEntity;
 
 /**

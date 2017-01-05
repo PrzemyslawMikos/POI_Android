@@ -1,21 +1,18 @@
 package additional;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import org.json.JSONException;
-
 import java.net.URL;
 
-import rest.RestHelper;
+import delegates.ImageTaskDelegate;
 
 /**
  * Created by Przemek on 13.12.2016.
  */
 
-public class ImageManager implements ImageTaskDelegate{
+public class ImageManager implements ImageTaskDelegate {
     private ImageTaskDelegate delegate;
     private Boolean result;
 

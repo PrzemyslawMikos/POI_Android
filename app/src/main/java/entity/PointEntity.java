@@ -14,6 +14,7 @@ public class PointEntity implements RestConstants{
     private Double longitude;
     private Double latitude;
     private String name;
+    private String locality;
     private String description;
     private String picture;
     private String mimetype;
@@ -21,10 +22,11 @@ public class PointEntity implements RestConstants{
     private Integer typeid;
     private Long userid;
 
-    public PointEntity(Double longitude, Double latitude, String name, String description, String picture, String mimetype, Integer typeid, Long userid) {
+    public PointEntity(Double longitude, Double latitude, String name, String locality, String description, String picture, String mimetype, Integer typeid, Long userid) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.name = name;
+        this.locality = locality;
         this.description = description;
         this.picture = picture;
         this.mimetype = mimetype;
@@ -37,6 +39,7 @@ public class PointEntity implements RestConstants{
         this.longitude = jPoint.getDouble(JSON_LONGITUDE_KEY);
         this.latitude = jPoint.getDouble(JSON_LATITUDE_KEY);
         this.name = jPoint.getString(JSON_NAME_KEY);
+        this.locality = jPoint.getString(JSON_LOCALITY_KEY);
         this.description = jPoint.getString(JSON_DESCRIPTION_KEY);
         this.picture = jPoint.getString(JSON_PICTURE_KEY);
         this.mimetype = jPoint.getString(JSON_MIMETYPE_KEY);
@@ -51,6 +54,7 @@ public class PointEntity implements RestConstants{
             jsonObject.accumulate(JSON_LONGITUDE_KEY, this.longitude.toString());
             jsonObject.accumulate(JSON_LATITUDE_KEY, this.latitude.toString());
             jsonObject.accumulate(JSON_NAME_KEY, this.name);
+            jsonObject.accumulate(JSON_LOCALITY_KEY, this.locality);
             jsonObject.accumulate(JSON_DESCRIPTION_KEY, this.description);
             jsonObject.accumulate(JSON_PICTURE_KEY, this.picture);
             jsonObject.accumulate(JSON_MIMETYPE_KEY, this.mimetype);
@@ -100,6 +104,14 @@ public class PointEntity implements RestConstants{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
     }
 
     public String getDescription() {

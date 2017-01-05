@@ -1,47 +1,45 @@
 package additional;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-
+import android.os.AsyncTask;
 import java.util.List;
 import java.util.Locale;
-
+import delegates.GoogleLocationTaskDelegate;
 import entity.PointEntity;
 
 /**
  * Created by Przemek on 29.12.2016.
  */
 
-public class GoogleLocation {
+public class GoogleLocation extends AsyncTask<PointEntity, GeoAddress, GeoAddress> {
 
-    PointEntity point;
-    GeoAddress geoAddress;
-    Context context;
+    private Context context;
+    private GoogleLocationTaskDelegate delegate;
 
-
-    public GoogleLocation(PointEntity point, Context context){
-        this.point = point;
+    public GoogleLocation(Context context, GoogleLocationTaskDelegate delegate){
         this.context = context;
-        setAddress();
+        this.delegate = delegate;
     }
 
-    public GeoAddress getAddress(){
-        return this.geoAddress;
-    }
-
-    private void setAddress() {
+    @Override
+    protected GeoAddress doInBackground(PointEntity... params) {
         try{
             Geocoder geocoder;
             List<Address> addresses;
             geocoder = new Geocoder(context, Locale.getDefault());
-            addresses = geocoder.getFromLocation(point.getLatitude(), point.getLongitude(), 1);
-            geoAddress = new GeoAddress(addresses.get(0).getAddressLine(0), addresses.get(0).getLocality(), addresses.get(0).getAdminArea(), addresses.get(0).getCountryName(), addresses.get(0).getPostalCode(), addresses.get(0).getFeatureName());
+            addresses = geocoder.getFromLocation(params[0].getLatitude(), params[0].getLongitude(), 1);
+            GeoAddress geoAddress = new GeoAddress(addresses.get(0).getAddressLine(0), addresses.get(0).getLocality(), addresses.get(0).getAdminArea(), addresses.get(0).getCountryName(), addresses.get(0).getPostalCode(), addresses.get(0).getFeatureName());
+            return geoAddress;
         }
-        catch (Exception e){
+        catch(Exception e){
+            return null;
         }
     }
 
+    @Override
+    protected void onPostExecute(GeoAddress address) {
+        delegate.TaskCompletionResult(address);
+    }
 }
