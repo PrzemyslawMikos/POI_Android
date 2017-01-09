@@ -1,6 +1,7 @@
 package com.adventure.poi.poi_android;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -75,7 +76,7 @@ public class AddActivity extends AppCompatActivity {
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         output=new File(dir, "CameraContentDemo.jpeg");
         i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
-
+        i.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         startActivityForResult(i, REQUEST_IMAGE_CAPTURE);
     }
 
@@ -142,7 +143,7 @@ public class AddActivity extends AppCompatActivity {
 
             SharedPreferencesManager prefManager = new SharedPreferencesManager(AddActivity.this);
             image.replaceAll("[\n\r]", "");
-            PointEntity pe = new PointEntity(location.getLongitude(), location.getLatitude(), editName.getText().toString(), editLocality.getText().toString(), editDescription.getText().toString(), image, "jpeg", 1, Long.valueOf(prefManager.getPreference(MainConstants.PREFERENCE_USERID)));
+            PointEntity pe = new PointEntity(location.getLongitude(), location.getLatitude(), editName.getText().toString(), editLocality.getText().toString(), editDescription.getText().toString(), image, "jpeg", 1, Long.valueOf(prefManager.getPreferenceString(MainConstants.PREFERENCE_USERID)));
             pointsHelper.postPoint("Dodawanie punktu", pe);
             output.delete();
         }

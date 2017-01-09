@@ -1,9 +1,6 @@
 package additional;
 
-import android.util.Log;
-
 import java.lang.reflect.Field;
-
 import constants.TextsConstants;
 
 /**
@@ -33,14 +30,13 @@ public class GeoAddress implements TextsConstants{
             f.setAccessible(true);
             try {
                 if (f.get(this) != null) {
-                    Log.d("nope", "nope");
-                    stringBuilder.append(f.get(this));
+                    stringBuilder.append(f.get(this) + ", ");
                 }
-            } catch (IllegalAccessException e) { // shouldn't happen because I used setAccessible
+            } catch (IllegalAccessException e) {
             }
         }
         try{
-            return String.format(TEXT_GOOGLE_LOCATION, address, city, state, country, postalcode, knownName);
+            return stringBuilder.toString();
         }
         catch(Exception e){
             return "bang";

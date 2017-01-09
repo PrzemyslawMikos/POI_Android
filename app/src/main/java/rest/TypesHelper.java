@@ -2,6 +2,9 @@ package rest;
 
 import android.app.Activity;
 import android.widget.Toast;
+
+import com.adventure.poi.poi_android.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import additional.ToastManager;
 import delegates.RestTaskDelegate;
+import entity.StatusEntity;
 import entity.TypeEntity;
 
 /**
@@ -45,24 +50,32 @@ public class TypesHelper extends EntityHelper{
         restHelper = new RestHelper(REST_TYPES_GET, HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
             @Override
             public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-                if(restHelper.getResult()) {
-                    if (restHelper.getResponseEntity().getStatusCode() == HttpStatus.OK) {
-                        String stypesarray = restHelper.getResponseEntity().getBody();
-                        JSONArray jtypesarray = new JSONArray(stypesarray);
-                        for (int i = 0; i < jtypesarray.length(); i++) {
-                            JSONObject jtype = jtypesarray.getJSONObject(i);
-                            TypeEntity type = new TypeEntity(jtype);
-                            types.add(type);
-                        }
+                if (restHelper.getResponseEntity().getStatusCode() == HttpStatus.OK) {
+                    String stypesarray = restHelper.getResponseEntity().getBody();
+                    JSONArray jtypesarray = new JSONArray(stypesarray);
+                    for (int i = 0; i < jtypesarray.length(); i++) {
+                        JSONObject jtype = jtypesarray.getJSONObject(i);
+                        TypeEntity type = new TypeEntity(jtype);
+                        types.add(type);
                     }
+                    TypesHelper.super.getDelegate().TaskCompletionResult(restHelper.getResponseEntity());
                 }
                 else{
-                    Toast.makeText(TypesHelper.super.getActivity(), "Wyjatek: " + restHelper.getException().getStatusCode().toString(), Toast.LENGTH_LONG).show();
+                    showMessages(restHelper.getStatus());
                 }
-                TypesHelper.super.getDelegate().TaskCompletionResult(restHelper.getResponseEntity());
             }
         });
         restHelper.runTask();
     }
 
+    private void showMessages(StatusEntity entity) {
+        switch (entity.getStatus()){
+            case STATUS_NOT_FOUND:
+                ToastManager.showToast(activity.getApplicationContext(), activity.getResources().getString(R.string.types_not_found), Toast.LENGTH_LONG);
+                break;
+            case STATUS_INTERNAL_SERVER_ERROR:
+                ToastManager.showToast(activity.getApplicationContext(), activity.getResources().getString(R.string.server_exception), Toast.LENGTH_LONG);
+                break;
+        }
+    }
 }

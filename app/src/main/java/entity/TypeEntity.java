@@ -2,14 +2,14 @@ package entity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.Serializable;
 import constants.RestConstants;
 
 /**
  * Created by Przemek on 12.12.2016.
  */
 
-public class TypeEntity implements RestConstants{
+public class TypeEntity implements RestConstants, Serializable{
 
     private int id;
     private String name;
@@ -17,6 +17,14 @@ public class TypeEntity implements RestConstants{
     private String addeddate;
     private String image;
     private String mimetype;
+
+    public TypeEntity(String name, String description, String addeddate, String image, String mimetype) {
+        this.name = name;
+        this.description = description;
+        this.addeddate = addeddate;
+        this.image = image;
+        this.mimetype = mimetype;
+    }
 
     public TypeEntity(JSONObject jType) throws JSONException {
         this.id = jType.getInt(JSON_ID_KEY);

@@ -7,7 +7,7 @@ package constants;
 public interface RestConstants {
 
     // Główna sciezka hosta
-    String REST_MAIN_HOST_PATH = "http://192.168.50.102";
+    String REST_MAIN_HOST_PATH = "http://192.168.1.6";
     // Sciezki Rest API
     String REST_ROOT_PATH = REST_MAIN_HOST_PATH + "/POI/Web/app_dev.php/api";
     // Sciezka zdjęć
@@ -30,6 +30,9 @@ public interface RestConstants {
     String REST_TYPES_GET = REST_ROOT_PATH + "/types";
     // Pobranie użytkownika po id
     String REST_USERS_GET_ID = REST_ROOT_PATH + "/user/%1$d";
+
+    // Parametr pobrania punktów z każdej miejscowości
+    String DEFAULT_POINTS_LOCALITY_PARAM = "*";
 
     // Parametr naglowka zadania
     String REQUEST_HEADER_BEARER = "Bearer %1$s";
@@ -64,7 +67,11 @@ public interface RestConstants {
     String STATUS_OK = "OK";
     String STATUS_WRONG_PARAMS = "WRONG_PARAMS";
     String STATUS_BAD_CREDENTIALS = "BAD_CREDENTIALS";
+    String STATUS_USER_BLOCKED = "USER_BLOCKED";
     String STATUS_USERNAME_EXIST = "USERNAME_EXIST";
     String STATUS_EMAIL_EXIST = "EMAIL_EXIST";
     String STATUS_INTERNAL_SERVER_ERROR = "INTERNAL_ERROR";
+    String STATUS_NOT_FOUND = "NOT_FOUND";
+    String STATUS_TOKEN_EXPIRED = "TOKEN_EXPIRED";
+    String STATUS_BAD_TOKEN = "BAD_TOKEN";
 }

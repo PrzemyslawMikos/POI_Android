@@ -2,9 +2,6 @@ package entity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Date;
-
 import constants.RestConstants;
 
 /**
@@ -53,11 +50,11 @@ public class UserEntity implements RestConstants {
     public JSONObject toJSON(){
         JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.accumulate("nickname", this.nickname);
-            jsonObject.accumulate("email", this.email);
-            jsonObject.accumulate("phone", this.phone);
-            jsonObject.accumulate("username", this.username);
-            jsonObject.accumulate("password", this.password);
+            jsonObject.accumulate(JSON_NICKNAME_KEY, this.nickname);
+            jsonObject.accumulate(JSON_EMAIL_KEY, this.email);
+            jsonObject.accumulate(JSON_PHONE_KEY, this.phone);
+            jsonObject.accumulate(JSON_USERNAME_KEY, this.username);
+            jsonObject.accumulate(JSON_PASSWORD_KEY, this.password);
             return jsonObject;
         }catch(JSONException e){
             return null;

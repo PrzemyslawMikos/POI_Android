@@ -41,7 +41,20 @@ public class SharedPreferencesManager implements MainConstants{
         }
     }
 
-    public boolean setKeyValue(String key, String value){
+    public boolean setKeyValueBoolean(String key, boolean value){
+        try{
+            SharedPreferences sharedPreferences = getSharedPreferences();
+            sharedPreferences.edit()
+                    .putBoolean(key, value)
+                    .apply();
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+
+    public boolean setKeyValueString(String key, String value){
         try{
             SharedPreferences sharedPreferences = getSharedPreferences();
             sharedPreferences.edit()
@@ -81,7 +94,7 @@ public class SharedPreferencesManager implements MainConstants{
         }
     }
 
-    public String getPreference(String preference){
+    public String getPreferenceString(String preference){
         try{
             SharedPreferences sharedPreferences = getSharedPreferences();
             if(sharedPreferences != null){
@@ -95,6 +108,23 @@ public class SharedPreferencesManager implements MainConstants{
         }
         catch (Exception e){
             return null;
+        }
+    }
+
+    public boolean getPreferenceBoolean(String preference){
+        try{
+            SharedPreferences sharedPreferences = getSharedPreferences();
+            if(sharedPreferences != null){
+                boolean valuePreference;
+                valuePreference = sharedPreferences.getBoolean(preference, false);
+                return valuePreference;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (Exception e){
+            return false;
         }
     }
 

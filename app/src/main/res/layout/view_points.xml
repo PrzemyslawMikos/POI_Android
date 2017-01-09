@@ -1,19 +1,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:descendantFocusability="blocksDescendants"
+    android:id="@+id/view_points"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextPointLocality"
+            android:layout_width="fill_parent"
+            android:hint="Nazwa miejscowości..." />
+
+        <Button
+            android:text="Szukaj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonSearchPoints" />
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:id="@+id/listViewPoints" />
+
         <Button
-            android:text="Dalej"
+            android:text="Poprzednia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonPreviousPage" />
+
+        <Button
+            android:text="Następna"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttonNextPage" />
+
 </LinearLayout>

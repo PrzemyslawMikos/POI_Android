@@ -25,5 +25,58 @@
         android:text=""
         android:layout_below="@+id/textViewPointLocation"
         android:id="@+id/textViewPointDescription" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/textViewPointName" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewPointName"
+        android:layout_toStartOf="@+id/textViewPointName"
+        android:layout_marginEnd="25dp"
+        android:id="@+id/textViewPointLocality" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewPointDescription"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="150dp"
+        android:id="@+id/textViewPointAddeddate" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewPointLocality"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="206dp"
+        android:id="@+id/textViewTypeName" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="84dp"
+        android:id="@+id/textViewTypeDescription" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewPointDescription"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="235dp"
+        android:id="@+id/textViewTypeAddeddate" />
 </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

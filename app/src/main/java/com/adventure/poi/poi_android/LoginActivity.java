@@ -13,21 +13,19 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import additional.SharedPreferencesManager;
 import delegates.RestTaskDelegate;
 import constants.MainConstants;
 import constants.RestConstants;
+import entity.StatusEntity;
 import entity.TokenEntity;
-import rest.RestHelper;
-
+import rest.LoginHelper;
+//TODO walidacja inputów
 public class LoginActivity extends AppCompatActivity implements RestConstants, MainConstants {
 
-    private RestHelper restHelper;
+    private LoginHelper loginHelper;
     private EditText editLogin, editPassword;
     private CheckBox checkBoxRememberMe;
 
@@ -47,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     }
 
     public void onLoginClick(View v){
-        login();
+        login(editLogin.getText().toString(), editPassword.getText().toString());
     }
 
     public void onRegisterClick(View v){
@@ -69,36 +67,32 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
         }
     }
 
-    private void login(){
-        try{
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            JSONObject request = new JSONObject();
-            request.put(JSON_USERNAME_KEY, editLogin.getText().toString());
-            request.put(JSON_PASSWORD_KEY, editPassword.getText().toString());
-            restHelper = new RestHelper(REST_TOKEN_POST, HttpMethod.POST, headers, request, LoginActivity.this, getResources().getString(R.string.login_dialog_text), new RestTaskDelegate() {
-                @Override
-                public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-                    if(checkData(result)) {
-                        Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-                        LoginActivity.this.finish();
-                        startActivity(intent);
-                    }
-                    else
-                        Snackbar.make(findViewById(R.id.activity_login), R.string.login_snackbar_bad_credentials, Snackbar.LENGTH_LONG).show();
-                }
-            });
-            restHelper.runTask();
-        }
-        catch(Exception e){
-            Snackbar.make(findViewById(R.id.activity_login), R.string.server_exception, Snackbar.LENGTH_LONG).show();
-        }
+    private void login(String login, String password){
+       loginHelper = new LoginHelper(LoginActivity.this, new RestTaskDelegate() {
+           @Override
+           public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+               if(result.getStatusCode() == HttpStatus.OK){
+                   String stoken = result.getBody();
+                   JSONObject jtoken = new JSONObject(stoken);
+                   TokenEntity token = new TokenEntity(jtoken);
+                   saveToken(token);
+                   saveCredentials();
+                   Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                   LoginActivity.this.finish();
+                   startActivity(intent);
+               }
+               else{
+                   showMessages(loginHelper.getRestHelper().getStatus());
+               }
+           }
+       });
+        loginHelper.loginServer(getResources().getString(R.string.login_dialog_text), login, password);
     }
 
     private void loginIfRemember(){
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
-        if(sharedPreferencesManager.hasCredentials()){
-            login();
+        if(sharedPreferencesManager.getPreferenceBoolean(MainConstants.PREFERENCE_REMEMBER_ME)){
+            login(sharedPreferencesManager.getPreferenceString(PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(PREFERENCE_PASSWORD));
         }
     }
 
@@ -118,44 +112,29 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     private void saveCredentials(){
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
         sharedPreferencesManager.setCredentials(editLogin.getText().toString(), editPassword.getText().toString());
+        sharedPreferencesManager.setKeyValueBoolean(MainConstants.PREFERENCE_REMEMBER_ME, checkBoxRememberMe.isChecked());
     }
 
     private void saveToken(TokenEntity token){
         SharedPreferencesManager prefManager = new SharedPreferencesManager(LoginActivity.this);
-        prefManager.setKeyValue(MainConstants.PREFERENCE_TOKEN, token.getToken());
-        prefManager.setKeyValue(MainConstants.PREFERENCE_USERID, token.getUserId());
+        prefManager.setKeyValueString(MainConstants.PREFERENCE_TOKEN, token.getToken());
+        prefManager.setKeyValueString(MainConstants.PREFERENCE_USERID, token.getUserId());
     }
 
-    public boolean checkData(ResponseEntity<String> result) {
-        try{
-            if(restHelper.getResult()){
-                if(result.getStatusCode() == HttpStatus.OK){
-                    String stoken = result.getBody();
-                    JSONObject jtoken = new JSONObject(stoken);
-                    TokenEntity token = new TokenEntity(jtoken);
-                    saveToken(token);
-                    if(checkBoxRememberMe.isChecked()){
-                        saveCredentials();
-                    }
-                    return true;
-                }
-            }else{
-                switch (restHelper.getStatus().getStatus()){
-                    case STATUS_BAD_CREDENTIALS:
-                        Snackbar.make(findViewById(R.id.activity_login), R.string.login_snackbar_bad_credentials, Snackbar.LENGTH_LONG).show();
-                        break;
-                    case STATUS_WRONG_PARAMS:
-                        Snackbar.make(findViewById(R.id.activity_login), R.string.login_bad_data, Snackbar.LENGTH_LONG).show();
-                        break;
-                    case STATUS_INTERNAL_SERVER_ERROR:
-                        Snackbar.make(findViewById(R.id.activity_login), R.string.server_exception, Snackbar.LENGTH_LONG).show();
-                        break;
-                }
-            }
-            return false;
-        }
-        catch(Exception e){
-            return false;
+    private void showMessages(StatusEntity entity) {
+        switch (entity.getStatus()){
+            case STATUS_BAD_CREDENTIALS:
+                Snackbar.make(findViewById(R.id.activity_login), R.string.login_snackbar_bad_credentials, Snackbar.LENGTH_LONG).show();
+                break;
+            case STATUS_WRONG_PARAMS:
+                Snackbar.make(findViewById(R.id.activity_login), R.string.login_bad_data, Snackbar.LENGTH_LONG).show();
+                break;
+            case STATUS_USER_BLOCKED:
+                Snackbar.make(findViewById(R.id.activity_login), R.string.login_user_blocked, Snackbar.LENGTH_LONG).show();
+                break;
+            case STATUS_INTERNAL_SERVER_ERROR:
+                Snackbar.make(findViewById(R.id.activity_login), R.string.server_exception, Snackbar.LENGTH_LONG).show();
+                break;
         }
     }
 }

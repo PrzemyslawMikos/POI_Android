@@ -21,6 +21,7 @@ import entity.PointEntity;
  */
 
 public class PointsRowAdapter extends ArrayAdapter<PointEntity> {
+
     Context context;
     int layoutId;
     ArrayList<PointEntity> data = null;

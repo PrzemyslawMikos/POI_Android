@@ -20,20 +20,8 @@ public class ImageManager implements ImageTaskDelegate {
         this.delegate = delegate;
     }
 
-    public ImageTaskDelegate getDelegate() {
-        return delegate;
-    }
-
-    public void setDelegate(ImageTaskDelegate delegate) {
-        this.delegate = delegate;
-    }
-
     public Boolean getResult() {
         return result;
-    }
-
-    public void setResult(Boolean result) {
-        this.result = result;
     }
 
     public void runTask(URL url) {

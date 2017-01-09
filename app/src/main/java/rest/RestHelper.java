@@ -3,38 +3,39 @@ package rest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
-
+import android.widget.Toast;
 import com.adventure.poi.poi_android.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResponseErrorHandler;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
-
 import additional.NetworkStateManager;
+import additional.SharedPreferencesManager;
+import constants.MainConstants;
+import constants.RestConstants;
 import delegates.RestTaskDelegate;
 import entity.StatusEntity;
+import entity.TokenEntity;
 
 /**
  * Created by Przemek on 04.12.2016.
  */
 
-public class RestHelper implements RestTaskDelegate {
+public class RestHelper implements RestTaskDelegate, RestConstants, MainConstants {
 
     private String urlPath;
     private HttpMethod requestMethod;
@@ -43,10 +44,8 @@ public class RestHelper implements RestTaskDelegate {
     private Activity activity;
     private String loadDialogMessage;
     private ResponseEntity<String> responseEntity;
-    private Boolean result;
     private RestTaskDelegate delegate;
-    private HttpClientErrorException exception;
-    private StatusEntity status;
+    private StatusEntity status = null;
 
     public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, JSONObject requestBody, Activity activity, String loadDialogMessage, RestTaskDelegate delegate) {
         this.urlPath = urlPath;
@@ -55,7 +54,6 @@ public class RestHelper implements RestTaskDelegate {
         this.requestBody = requestBody;
         this.activity = activity;
         this.loadDialogMessage = loadDialogMessage;
-        this.result = false;
         this.delegate = delegate;
     }
 
@@ -66,20 +64,24 @@ public class RestHelper implements RestTaskDelegate {
         this.requestBody = null;
         this.activity = activity;
         this.loadDialogMessage = loadDialogMessage;
-        this.result = false;
         this.delegate = delegate;
+    }
+
+    private void setStatus(String statusText){
+        try{
+            status = new StatusEntity(statusText);
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    public StatusEntity getStatus(){
+        return status;
     }
 
     public ResponseEntity<String> getResponseEntity() {
         return responseEntity;
-    }
-
-    public Boolean getResult() {
-        return result;
-    }
-
-    public HttpClientErrorException getException() {
-        return exception;
     }
 
     public void runTask() {
@@ -100,23 +102,42 @@ public class RestHelper implements RestTaskDelegate {
         }
     }
 
+    private void saveToken(TokenEntity token){
+        SharedPreferencesManager prefManager = new SharedPreferencesManager(activity);
+        prefManager.setKeyValueString(MainConstants.PREFERENCE_TOKEN, token.getToken());
+        prefManager.setKeyValueString(MainConstants.PREFERENCE_USERID, token.getUserId());
+    }
+
     @Override
     public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
         responseEntity = result;
-        delegate.TaskCompletionResult(result);
-    }
+        if(result.getStatusCode() == HttpStatus.UNAUTHORIZED){
+            LoginHelper loginHelper = new LoginHelper(activity, new RestTaskDelegate() {
+                @Override
+                public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                    if(result.getStatusCode() == HttpStatus.OK) {
+                        String stoken = result.getBody();
+                        JSONObject jtoken = new JSONObject(stoken);
+                        TokenEntity token = new TokenEntity(jtoken);
+                        saveToken(token);
+                        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(activity);
+                        HttpHeaders header = new HttpHeaders();
+                        header.setContentType(MediaType.APPLICATION_JSON);
+                        header.set(REQUEST_HEADER_AUTHORIZATION, String.format(REQUEST_HEADER_BEARER, sharedPreferencesManager.getPreferenceString(PREFERENCE_TOKEN)));
+                        requestHeader = header;
+                        runTask();
+                    }
+                    else{
 
-    private void setStatus(String statusText){
-        try{
-            status = new StatusEntity(statusText);
+                    }
+                }
+            });
+            SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(activity);
+            loginHelper.loginServer(activity.getResources().getString(R.string.login_renew_token), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_PASSWORD));
         }
-        catch (Exception e){
-
+        else{
+            delegate.TaskCompletionResult(result);
         }
-    }
-
-    public StatusEntity getStatus(){
-        return status;
     }
 
     private class RestTask extends AsyncTask<Void, ResponseEntity<String>, ResponseEntity<String>> {
@@ -128,6 +149,13 @@ public class RestHelper implements RestTaskDelegate {
         public RestTask(Activity activity, RestTaskDelegate delegate) {
             context = activity;
             dialog = new ProgressDialog(context);
+            dialog.setCancelable(false);
+//            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//                @Override
+//                public void onCancel(DialogInterface dialog) {
+//                    cancel(true);
+//                }
+//            });
             this.delegate = delegate;
         }
 
@@ -140,40 +168,30 @@ public class RestHelper implements RestTaskDelegate {
         protected ResponseEntity<String> doInBackground(Void... params) {
             try {
                 RestTemplate restTemplate = new RestTemplate();
-                restTemplate.setErrorHandler(new ResponseErrorHandler() {
-                    @Override
-                    public boolean hasError(ClientHttpResponse response) throws IOException {
-                        result = false;
-                        setStatus(response.getBody().toString());
-                        responseEntity = new ResponseEntity<String>(response.getBody().toString(), response.getStatusCode());
-                        return false;
-                    }
-
-                    @Override
-                    public void handleError(ClientHttpResponse response) throws IOException {
-                        result = false;
-                        responseEntity = new ResponseEntity<String>(response.getBody().toString(), response.getStatusCode());
-                        setStatus(response.getBody().toString());
-                    }
-                });
                 HttpEntity<String> entity;
-                // Żądanie GET nie posiada zawartości
                 if(requestBody != null) {
                     entity = new HttpEntity<>(requestBody.toString(), requestHeader);
                 }
                 else {
                     entity = new HttpEntity<>(requestHeader);
                 }
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 responseEntity = restTemplate.exchange(urlPath, requestMethod, entity, String.class);
-                result = true;
                 return responseEntity;
-            } catch (HttpClientErrorException e) {
-                exception = e;
-                result = false;
+            } catch (HttpStatusCodeException e) {
+                RestHelper.this.setStatus(e.getResponseBodyAsString());
+                responseEntity = new ResponseEntity<String>(e.getResponseBodyAsString(), e.getStatusCode());
+                setStatus(e.getResponseBodyAsString());
+                return responseEntity;
+            }
+            catch (RestClientException e){
+                dialog.dismiss();
+                this.cancel(true);
                 return responseEntity;
             }
             catch (Exception e){
-                result = false;
+                dialog.dismiss();
+                this.cancel(true);
                 return responseEntity;
             }
         }
@@ -188,6 +206,12 @@ public class RestHelper implements RestTaskDelegate {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast t = Toast.makeText(context, context.getResources().getString(R.string.rest_server_unavailable), Toast.LENGTH_LONG);
+            t.show();
         }
     }
 }

@@ -16,13 +16,9 @@ public class StatusEntity implements RestConstants{
         return status;
     }
 
-    public StatusEntity(JSONObject jStatus) throws JSONException {
-        this.status = jStatus.getString(JSON_STATUS_KEY);
-    }
-
     public StatusEntity(String sStatus) throws JSONException {
         JSONObject jStatus = new JSONObject(sStatus);
-        new StatusEntity(jStatus);
+        this.status = jStatus.getString(JSON_STATUS_KEY);
     }
 
 }

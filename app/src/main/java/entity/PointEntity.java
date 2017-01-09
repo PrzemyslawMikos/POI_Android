@@ -2,13 +2,14 @@ package entity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.Serializable;
 import constants.RestConstants;
 
 /**
  * Created by Przemek on 12.12.2016.
  */
 
-public class PointEntity implements RestConstants{
+public class PointEntity implements RestConstants, Serializable{
 
     private Long id;
     private Double longitude;

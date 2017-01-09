@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/activity_point"
     tools:context="com.adventure.poi.poi_android.PointActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -45,7 +46,8 @@
         app:layout_anchor="@+id/app_bar"
         app:srcCompat="@android:drawable/ic_menu_myplaces"
         app:layout_anchorGravity="bottom|center_horizontal"
-        android:layout_gravity="center_vertical|left" />
+        android:layout_gravity="center_vertical|left"
+        android:onClick="onFloatingFootNaviClick" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/carNavi"
@@ -56,6 +58,7 @@
         app:layout_anchorGravity="bottom|center_horizontal"
         android:layout_gravity="center_vertical|right"
         app:layout_anchor="@+id/app_bar"
-        style="@style/Widget.Design.FloatingActionButton" />
+        style="@style/Widget.Design.FloatingActionButton"
+        android:onClick="onFloatingCarNaviClick" />
 
 </android.support.design.widget.CoordinatorLayout>

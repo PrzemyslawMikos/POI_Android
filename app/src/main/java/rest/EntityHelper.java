@@ -1,7 +1,6 @@
 package rest;
 
 import android.app.Activity;
-import android.util.Log;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import additional.SharedPreferencesManager;
@@ -17,7 +16,7 @@ import entity.StatusEntity;
 public class EntityHelper implements RestConstants, MainConstants {
     private StatusEntity statusEntity;
     private RestTaskDelegate delegate;
-    private Activity activity;
+    protected Activity activity;
     protected RestHelper restHelper;
 
     protected EntityHelper(Activity activity, RestTaskDelegate delegate) {
@@ -37,10 +36,6 @@ public class EntityHelper implements RestConstants, MainConstants {
         return delegate;
     }
 
-    protected void setDelegate(RestTaskDelegate delegate) {
-        this.delegate = delegate;
-    }
-
     protected Activity getActivity() {
         return activity;
     }
@@ -53,12 +48,11 @@ public class EntityHelper implements RestConstants, MainConstants {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set(REQUEST_HEADER_AUTHORIZATION, String.format(REQUEST_HEADER_BEARER, this.getToken()));
-        Log.d("bearer", String.format(REQUEST_HEADER_BEARER, this.getToken()));
         return headers;
     }
 
     private String getToken(){
         SharedPreferencesManager prefManager = new SharedPreferencesManager(activity);
-        return prefManager.getPreference(PREFERENCE_TOKEN);
+        return prefManager.getPreferenceString(PREFERENCE_TOKEN);
     }
 }
