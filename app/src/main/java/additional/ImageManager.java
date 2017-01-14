@@ -3,9 +3,7 @@ package additional;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-
 import java.net.URL;
-
 import delegates.ImageTaskDelegate;
 
 /**

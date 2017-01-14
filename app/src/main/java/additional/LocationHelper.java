@@ -1,34 +1,35 @@
 package additional;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import delegates.LocationDelegate;
 
 /**
  * Created by Przemek on 27.12.2016.
  */
 
 public class LocationHelper implements LocationListener {
-    private Context context;
+
     private LocationManager locationManager;
     private Location currentLocation;
+    private LocationDelegate locationDelegate;
+    private ProgressDialog dialog;
 
-    public LocationHelper(Context context) {
-        this.context = context;
+    public LocationHelper(Context context, String dialogMessage, LocationDelegate locationDelegate) {
+        this.locationDelegate = locationDelegate;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            this.dialog = new ProgressDialog(context);
+            this.dialog.setMessage(dialogMessage);
+            this.dialog.show();
         }
     }
 
@@ -36,26 +37,26 @@ public class LocationHelper implements LocationListener {
         return currentLocation;
     }
 
+    public void stopLocationManager(Context context) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.removeUpdates(this);
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         currentLocation = location;
-        Log.d("Loc", Double.toString(location.getLatitude()) + " - " + Double.toString(location.getLongitude()));
-        Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
-        String adres = "";
-        StringBuilder builder = new StringBuilder();
-        try {
-            List<Address> address = geoCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            int maxLines = address.get(0).getMaxAddressLineIndex();
-            for (int i = 0; i < maxLines; i++) {
-                String addressStr = address.get(0).getAddressLine(i);
-                builder.append(addressStr);
-                builder.append(" ");
-            }
-            adres = builder.toString();
-        } catch (IOException e ) {
-
-        } catch (NullPointerException e) {
-
+        locationDelegate.TaskCompletionResult(location);
+        if(dialog.isShowing()){
+            dialog.dismiss();
         }
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,76 +8,151 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.adventure.poi.poi_android.PointActivity"
     tools:showIn="@layout/activity_point">
-<RelativeLayout
-    android:layout_marginTop="15dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text=""
-        android:id="@+id/textViewPointLocation" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text=""
-        android:layout_below="@+id/textViewPointLocation"
-        android:id="@+id/textViewPointDescription" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/textViewPointName" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textViewPointName"
-        android:layout_toStartOf="@+id/textViewPointName"
-        android:layout_marginEnd="25dp"
-        android:id="@+id/textViewPointLocality" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textViewPointDescription"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="150dp"
-        android:id="@+id/textViewPointAddeddate" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewPointLocality"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="206dp"
-        android:id="@+id/textViewTypeName" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="84dp"
-        android:id="@+id/textViewTypeDescription" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewPointDescription"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="235dp"
-        android:id="@+id/textViewTypeAddeddate" />
-</RelativeLayout>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+                <ImageView
+                    android:src="@drawable/ic_book"
+                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_weight="0.7"
+                    android:contentDescription="" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="0.3">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:textSize="18sp"
+                            android:gravity="left"
+                            android:text="@string/point_description_point" />
+                        <TextView
+                            android:id="@+id/textViewPointRating"
+                            android:layout_alignParentRight="true"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:textSize="18sp"
+                            android:gravity="left" />
+                        <ImageView
+                            android:src="@drawable/ic_half_star"
+                            android:layout_alignRight="@id/textViewPointRating"
+                            android:layout_height="wrap_content"
+                            android:layout_width="80dp"
+                            android:contentDescription="" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_marginBottom="6dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewPointName" />
+                    <TextView
+                        android:layout_marginBottom="6dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewPointDescription" />
+                    <TextView
+                        android:layout_marginBottom="6dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewPointLocality" />
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewPointAddeddate" />
+                </LinearLayout>
+            </LinearLayout>
+            <View style="@style/Divider"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp">
+                <ImageView
+                    android:src="@drawable/ic_category"
+                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_weight="0.7"
+                    android:contentDescription="Type icon" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="0.3">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:layout_marginBottom="15dp"
+                        android:textSize="18sp"
+                        android:gravity="left"
+                        android:text="@string/point_category" />
+                    <TextView
+                        android:layout_marginBottom="6dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewTypeName" />
+                    <TextView
+                        android:layout_marginBottom="6dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewTypeDescription" />
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewTypeAddeddate" />
+                </LinearLayout>
+            </LinearLayout>
+            <View style="@style/Divider"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp">
+                <ImageView
+                    android:src="@drawable/ic_google"
+                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_weight="0.7"
+                    android:contentDescription="" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="0.3">
+                    <TextView
+                        android:text="@string/point_google_locality"
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:layout_marginBottom="15dp"
+                        android:textSize="18sp"
+                        android:gravity="left"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewPointLocation" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </android.support.v4.widget.NestedScrollView>

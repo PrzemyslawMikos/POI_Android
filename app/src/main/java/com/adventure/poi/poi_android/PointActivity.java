@@ -12,9 +12,10 @@ import android.widget.TextView;
 import java.net.MalformedURLException;
 import java.net.URL;
 import additional.GeoAddress;
-import additional.GoogleLocation;
-import additional.GoogleNavi;
+import google.GoogleLocation;
+import google.GoogleNavi;
 import additional.ImageManager;
+import additional.PointRatingDialog;
 import constants.MainConstants;
 import delegates.GoogleLocationTaskDelegate;
 import delegates.ImageTaskDelegate;
@@ -26,7 +27,7 @@ import entity.TypeEntity;
 public class PointActivity extends AppCompatActivity implements RestConstants, MainConstants, TextsConstants {
 
     private Toolbar toolbar;
-    private TextView textPointLocation, textPointDescription, textPointName, textPointLocality, textPointAddeddate, textTypeName, textTypeDescription, textTypeAddeddate;
+    private TextView textPointLocation, textPointDescription, textPointName, textPointLocality, textPointRating, textPointAddeddate, textTypeName, textTypeDescription, textTypeAddeddate;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private PointEntity point;
     private TypeEntity type;
@@ -50,6 +51,7 @@ public class PointActivity extends AppCompatActivity implements RestConstants, M
         textTypeName = (TextView) findViewById(R.id.textViewTypeName);
         textTypeDescription = (TextView) findViewById(R.id.textViewTypeDescription);
         textTypeAddeddate = (TextView) findViewById(R.id.textViewTypeAddeddate);
+        textPointRating = (TextView) findViewById(R.id.textViewPointRating);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         setSupportActionBar(toolbar);
     }
@@ -72,6 +74,7 @@ public class PointActivity extends AppCompatActivity implements RestConstants, M
         textPointDescription.setText(point.getDescription());
         textPointLocality.setText(point.getLocality());
         textPointAddeddate.setText(point.getAddeddate());
+        textPointRating.setText(point.getRating().toString());
         textTypeName.setText(type.getName());
         textTypeDescription.setText(type.getDescription());
         textTypeAddeddate.setText(type.getAddeddate());
@@ -81,8 +84,9 @@ public class PointActivity extends AppCompatActivity implements RestConstants, M
         GoogleNavi.startNavi(GOOGLE_NAVI_CAR, PointActivity.this, point);
     }
 
-    public void onFloatingFootNaviClick(View v){
-        GoogleNavi.startNavi(GOOGLE_NAVI_FOOT, PointActivity.this, point);
+    public void onFloatingSetRatingClick(View v){
+        PointRatingDialog pointRatingDialog = new PointRatingDialog(PointActivity.this, point);
+        pointRatingDialog.show();
     }
 
     private void loadImage(){
@@ -107,7 +111,7 @@ public class PointActivity extends AppCompatActivity implements RestConstants, M
             @Override
             public void TaskCompletionResult(GeoAddress result) {
                 if(result != null){
-                    textPointLocation.setText(result.getCompleteAddress());
+                    textPointLocation.setText(result.getCompleteAddress(getResources().getString(R.string.google_address_no_data)));
                 }
             }
         });

@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
-
+import java.lang.ref.WeakReference;
 import java.net.URL;
 
 /**
@@ -13,10 +13,10 @@ import java.net.URL;
 
 public class PictureLoader extends AsyncTask <URL, Void, Bitmap> {
 
-    private ImageView imageView;
+    private final WeakReference<ImageView> imageViewReference;
 
     public PictureLoader(ImageView imageView){
-        this.imageView = imageView;
+        imageViewReference = new WeakReference<ImageView>(imageView);
     }
 
     @Override
@@ -32,8 +32,14 @@ public class PictureLoader extends AsyncTask <URL, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap result){
-        if(result != null){
-            imageView.setImageBitmap(result);
+        if (imageViewReference != null) {
+            ImageView imageView = imageViewReference.get();
+            if (imageView != null) {
+                if (result != null) {
+                    imageView.setImageBitmap(result);
+                }
+            }
         }
     }
+
 }

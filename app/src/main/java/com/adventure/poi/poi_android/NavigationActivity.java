@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,11 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
-
-import additional.ToastManager;
 import additional.TypesRowAdapter;
 import additional.PointsRowAdapter;
 import delegates.RestTaskDelegate;
@@ -31,6 +31,7 @@ import constants.MainConstants;
 import constants.RestConstants;
 import entity.PointEntity;
 import entity.TypeEntity;
+import entity.UserEntity;
 import rest.PointsHelper;
 import rest.TypesHelper;
 import rest.UsersHelper;
@@ -88,15 +89,20 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
     }
 
     private void getTypes(){
+        if(listTypes != null){
+            fillListTypes();
+        }
+        else{
+            typesHelper = new TypesHelper(NavigationActivity.this, new RestTaskDelegate() {
+                @Override
+                public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                    listTypes = typesHelper.getTypes();
+                    fillListTypes();
+                }
+            });
+            typesHelper.getAllTypes(getResources().getString(R.string.types_downloading));
+        }
         setTitle(getResources().getString(R.string.navigation_activity_type_title));
-        typesHelper = new TypesHelper(NavigationActivity.this, new RestTaskDelegate() {
-            @Override
-            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-                listTypes = typesHelper.getTypes();
-                fillListTypes();
-            }
-        });
-        typesHelper.getAllTypes(getResources().getString(R.string.types_downloading));
     }
 
     public void fillListTypes(){
@@ -152,7 +158,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
             }
         });
     }
-
+//TODO ulepszyć
     private void fillListPoints(ArrayList<PointEntity> points){
         if(findViewById(R.id.view_points) == null){
             createPointView();
@@ -216,23 +222,38 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         }
     }
 
+    private void displayUserData(){
+        usersHelper = new UsersHelper(NavigationActivity.this, new RestTaskDelegate() {
+            @Override
+            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                showUserData(usersHelper.getUsers().get(0));
+            }
+        });
+        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
+        usersHelper.getUserById(getResources().getString(R.string.downloading_user_data), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_USERID));
+    }
+
+    private void showUserData(UserEntity user){
+        clearContentView();
+        LayoutInflater linflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView;
+        customView = linflater.inflate(R.layout.info_user, null);
+        linearLayout.addView(customView);
+        // TODO udoskonalić wyświetlanie danych użytkownika
+        TextView textView = (TextView) findViewById(R.id.textViewUserInfo);
+        textView.setText("Nick: " + user.getNickname() + "\nNazwa użytkownika: " + user.getUsername() + "\nEmail: " + user.getEmail() + "\nTelefon: " + user.getPhone() + "\nData rejestracji: " + user.getCreationdate());
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_category) {
             getTypes();
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-            //displayUserData();
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_user_data) {
+            displayUserData();
+        } else if (id == R.id.nav_logout) {
             logout();
         }
 
@@ -240,31 +261,4 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    private void changePageTitle(String title){
-        setTitle(title);
-    }
-
-
-    //    private void displayUserData(){
-//        usersHelper = new UsersHelper(NavigationActivity.this, new RestTaskDelegate() {
-//            @Override
-//            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-//                showUserData(usersHelper.getUsers().get(0));
-//            }
-//        });
-//        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
-//        usersHelper.getUserById("Pobieranie danych użytkownika", sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_USERID));
-//    }
-
-//    private void showUserData(UserEntity user){
-//        clearContentView();
-//        LinearLayout ll = (LinearLayout) findViewById(R.id.content_navigation);
-//        LayoutInflater linflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View customView;
-//        customView = linflater.inflate(R.layout.info_user, null);
-//        ll.addView(customView);
-//        TextView textView = (TextView) findViewById(R.id.textViewUserInfo);
-//        textView.setText("Nick: " + user.getNickname() + "\nNazwa użytkownika: " + user.getUsername() + "\nEmail: " + user.getEmail() + "\nTelefon: " + user.getPhone() + "\nData rejestracji: " + user.getCreationdate());
-//    }
 }

@@ -1,10 +1,8 @@
 package rest;
 
 import android.app.Activity;
-import android.widget.Toast;
-
+import android.support.design.widget.Snackbar;
 import com.adventure.poi.poi_android.R;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,8 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
-
-import additional.ToastManager;
+import additional.SnackbarManager;
 import delegates.RestTaskDelegate;
 import entity.StatusEntity;
 import entity.TypeEntity;
@@ -71,10 +68,10 @@ public class TypesHelper extends EntityHelper{
     private void showMessages(StatusEntity entity) {
         switch (entity.getStatus()){
             case STATUS_NOT_FOUND:
-                ToastManager.showToast(activity.getApplicationContext(), activity.getResources().getString(R.string.types_not_found), Toast.LENGTH_LONG);
+                SnackbarManager.showSnackbar(activity, activity.getResources().getString(R.string.types_not_found), Snackbar.LENGTH_LONG);
                 break;
             case STATUS_INTERNAL_SERVER_ERROR:
-                ToastManager.showToast(activity.getApplicationContext(), activity.getResources().getString(R.string.server_exception), Toast.LENGTH_LONG);
+                SnackbarManager.showSnackbar(activity, activity.getResources().getString(R.string.server_exception), Snackbar.LENGTH_LONG);
                 break;
         }
     }

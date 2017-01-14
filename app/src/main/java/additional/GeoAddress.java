@@ -1,6 +1,5 @@
 package additional;
 
-import java.lang.reflect.Field;
 import constants.TextsConstants;
 
 /**
@@ -8,8 +7,6 @@ import constants.TextsConstants;
  */
 
 public class GeoAddress implements TextsConstants{
-
-    //TODO zabezpieczenia jeśli coś nie zostanie ustawione!!
 
     private String address, city, state, country, postalcode, knownName;
 
@@ -22,25 +19,15 @@ public class GeoAddress implements TextsConstants{
         this.knownName = knownName;
     }
 
-    public String getCompleteAddress(){
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (Field f : getClass().getFields()) {
-            f.setAccessible(true);
-            try {
-                if (f.get(this) != null) {
-                    stringBuilder.append(f.get(this) + ", ");
-                }
-            } catch (IllegalAccessException e) {
-            }
-        }
-        try{
-            return stringBuilder.toString();
-        }
-        catch(Exception e){
-            return "bang";
-        }
+    public String getCompleteAddress(String noData){
+        return String.format(TEXT_GOOGLE_LOCATION,
+                address != null ? address : noData,
+                city != null ? city : noData,
+                state != null ? state : noData,
+                country != null ? country : noData,
+                postalcode != null ? postalcode : noData,
+                knownName != null ? knownName : noData
+        );
     }
 
     public String getAddress() {

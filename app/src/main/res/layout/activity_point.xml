@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,7 +23,7 @@
             app:expandedTitleGravity="center"
             app:expandedTitleMarginBottom="10dp"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@color/primary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar
@@ -39,26 +40,26 @@
     <include layout="@layout/content_point" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/footNavi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@+id/app_bar"
-        app:srcCompat="@android:drawable/ic_menu_myplaces"
-        app:layout_anchorGravity="bottom|center_horizontal"
-        android:layout_gravity="center_vertical|left"
-        android:onClick="onFloatingFootNaviClick" />
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/carNavi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_compass"
-        app:layout_anchorGravity="bottom|center_horizontal"
-        android:layout_gravity="center_vertical|right"
-        app:layout_anchor="@+id/app_bar"
+        app:srcCompat="@drawable/ic_navi"
         style="@style/Widget.Design.FloatingActionButton"
-        android:onClick="onFloatingCarNaviClick" />
+        android:onClick="onFloatingCarNaviClick"
+        app:layout_anchorGravity="center_vertical|right"
+        android:layout_gravity="bottom|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_circle_star"
+        style="@style/Widget.Design.FloatingActionButton"
+        android:onClick="onFloatingSetRatingClick"
+        app:layout_anchorGravity="bottom|right"
+        android:layout_gravity="center_vertical|start"
+        app:layout_anchor="@+id/app_bar" />
 
 </android.support.design.widget.CoordinatorLayout>

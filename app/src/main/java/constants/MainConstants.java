@@ -17,6 +17,13 @@ public interface MainConstants {
     // Uprawnienia
     int PERMISSION = 1;
 
+    // Nazwa tymczasowego zdjęcia
+    String IMAGE_TMP_NAME = "TmpImgPoi.jpeg";
+
+    // Rozmiar zdjęć
+    int IMAGE_RESIZED_HEIGHT = 600;
+    int IMAGE_RESIZED_WIDTH = 800;
+
     // Przekazywanie pomiędzy aktywnościami
     String SERIAlIZABLE_POINT = "point";
     String SERIAlIZABLE_TYPE= "type";

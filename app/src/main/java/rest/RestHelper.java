@@ -3,7 +3,6 @@ package rest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.provider.Settings;
@@ -85,8 +84,7 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
     }
 
     public void runTask() {
-        NetworkStateManager networkState = new NetworkStateManager();
-        if(networkState.isNetworkAvailable(activity)){
+        if(NetworkStateManager.isNetworkAvailable(activity)){
             RestTask restTask = new RestTask(activity, this);
             restTask.execute();
         }

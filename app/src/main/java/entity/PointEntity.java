@@ -14,6 +14,7 @@ public class PointEntity implements RestConstants, Serializable{
     private Long id;
     private Double longitude;
     private Double latitude;
+    private Double rating;
     private String name;
     private String locality;
     private String description;
@@ -23,9 +24,10 @@ public class PointEntity implements RestConstants, Serializable{
     private Integer typeid;
     private Long userid;
 
-    public PointEntity(Double longitude, Double latitude, String name, String locality, String description, String picture, String mimetype, Integer typeid, Long userid) {
+    public PointEntity(Double longitude, Double latitude, Double rating, String name, String locality, String description, String picture, String mimetype, Integer typeid, Long userid) {
         this.longitude = longitude;
         this.latitude = latitude;
+        this.rating = rating;
         this.name = name;
         this.locality = locality;
         this.description = description;
@@ -39,6 +41,7 @@ public class PointEntity implements RestConstants, Serializable{
         this.id = jPoint.getLong(JSON_ID_KEY);
         this.longitude = jPoint.getDouble(JSON_LONGITUDE_KEY);
         this.latitude = jPoint.getDouble(JSON_LATITUDE_KEY);
+        this.rating = jPoint.getDouble(JSON_RATING_KEY);
         this.name = jPoint.getString(JSON_NAME_KEY);
         this.locality = jPoint.getString(JSON_LOCALITY_KEY);
         this.description = jPoint.getString(JSON_DESCRIPTION_KEY);
@@ -55,6 +58,8 @@ public class PointEntity implements RestConstants, Serializable{
             jsonObject.accumulate(JSON_LONGITUDE_KEY, this.longitude.toString());
             jsonObject.accumulate(JSON_LATITUDE_KEY, this.latitude.toString());
             jsonObject.accumulate(JSON_NAME_KEY, this.name);
+            if(this.rating != null)
+                jsonObject.accumulate(JSON_RATING_KEY, this.rating);
             jsonObject.accumulate(JSON_LOCALITY_KEY, this.locality);
             jsonObject.accumulate(JSON_DESCRIPTION_KEY, this.description);
             jsonObject.accumulate(JSON_PICTURE_KEY, this.picture);
@@ -97,6 +102,14 @@ public class PointEntity implements RestConstants, Serializable{
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public String getName() {

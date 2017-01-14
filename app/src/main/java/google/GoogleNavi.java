@@ -1,4 +1,4 @@
-package additional;
+package google;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import entity.PointEntity;
 
 public final class GoogleNavi implements MainConstants {
 
-    private static GoogleNavi navi;
+    private static GoogleNavi googleNavi;
 
     public static void startNavi(String mode, Activity activity, PointEntity point){
         Uri gmmIntentUri = Uri.parse(String.format(mode, point.getLatitude(), point.getLongitude()));

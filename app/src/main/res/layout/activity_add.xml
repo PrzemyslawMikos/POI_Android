@@ -1,83 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_add"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.adventure.poi.poi_android.AddActivity">
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="22dp"
-        android:id="@+id/editTextName" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:layout_below="@+id/editTextName"
-        android:layout_alignEnd="@+id/editTextName"
-        android:layout_marginTop="18dp"
-        android:id="@+id/editTextDescription"
-        android:text="Description" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_below="@+id/spinnerTypes"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:id="@+id/imageViewPhoto" />
-
-    <Button
-        android:text="Dodaj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/buttonTakePhoto"
-        android:layout_marginBottom="38dp"
-        android:id="@+id/buttonSend"
-        android:onClick="onSendClick" />
-
-    <Button
-        android:text="Zdjęcie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonTakePhoto"
-        android:onClick="onPhotoClick"
-        android:layout_alignTop="@+id/editTextName"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="22dp" />
-
-    <Spinner
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FF0000"
-        android:layout_marginTop="54dp"
-        android:id="@+id/spinnerTypes"
-        android:layout_below="@+id/editTextDescription"
-        android:layout_alignParentStart="true" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/ic_mountain"
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"/>
+        <TextView
+            android:text="Dodaj punkt"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:textSize="24sp" />
+        <View style="@style/Divider"/>
+        </LinearLayout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_login"
+        android:fitsSystemWindows="true">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+            <TextView
+                android:text="Zdjęcie"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:textSize="20sp" />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher"
+                android:layout_marginBottom="18dp"
+                android:id="@+id/imageViewPhoto" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Kategoria:"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="0.7"
+                    android:textSize="20sp" />
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="25dp"
+                    android:gravity="center"
+                    android:layout_weight="0.3"
+                    android:id="@+id/spinnerTypes" />
+            </LinearLayout>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Miejscowosc"
-        android:ems="10"
-        android:layout_above="@+id/imageViewPhoto"
-        android:layout_alignParentStart="true"
-        android:id="@+id/editTextLocality" />
-</RelativeLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nazwa miejsca zainteresowanias"
+                    android:ems="10"
+                    android:layout_marginBottom="18dp"
+                    android:id="@+id/editTextName" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Lokalizacja (nazwa miejscowości)"
+                    android:ems="10"
+                    android:layout_marginBottom="18dp"
+                    android:id="@+id/editTextLocality" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:layout_marginBottom="18dp"
+                    android:id="@+id/editTextDescription"
+                    android:hint="Opis (co ciekawego można tu zobaczyć/zrobić)" />
+            </android.support.design.widget.TextInputLayout>
+
+            <RatingBar
+                android:layout_marginBottom="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:clickable="true"
+                android:id="@+id/ratingRatingBar"
+                android:layout_gravity="center"
+                android:numStars="5"
+                android:stepSize="1"
+                android:rating="4"
+                android:isIndicator="false"/>
+
+            <Button
+                android:text="Dodaj"
+                android:textColor="@color/accent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/buttonSend"
+                android:onClick="onSendClick" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

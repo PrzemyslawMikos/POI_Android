@@ -1,4 +1,4 @@
-package additional;
+package google;
 
 import android.content.Context;
 import android.location.Address;
@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import java.util.List;
 import java.util.Locale;
+import additional.GeoAddress;
 import delegates.GoogleLocationTaskDelegate;
 import entity.PointEntity;
 

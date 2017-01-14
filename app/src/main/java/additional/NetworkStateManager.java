@@ -9,9 +9,11 @@ import android.net.NetworkInfo;
  * Created by Przemek on 23.12.2016.
  */
 
-public class NetworkStateManager{
+public final class NetworkStateManager{
 
-    public boolean isNetworkAvailable(Activity activity) {
+    private static NetworkStateManager networkStateManager;
+
+    public static boolean isNetworkAvailable(Activity activity) {
         ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();

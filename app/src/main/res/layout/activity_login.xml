@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/login_activity_username"
+                android:text="user"
                 android:ems="10"
                 android:id="@+id/editTextLogin" />
         </android.support.design.widget.TextInputLayout>
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
+                android:text="user"
                 android:id="@+id/editTextPassword"
                 android:hint="@string/login_activity_password" />
         </android.support.design.widget.TextInputLayout>

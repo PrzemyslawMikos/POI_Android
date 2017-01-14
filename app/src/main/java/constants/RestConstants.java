@@ -30,6 +30,8 @@ public interface RestConstants {
     String REST_TYPES_GET = REST_ROOT_PATH + "/types";
     // Pobranie użytkownika po id
     String REST_USERS_GET_ID = REST_ROOT_PATH + "/user/%1$d";
+    // Dodanie oceny
+    String REST_RATINGS_POST = REST_ROOT_PATH + "/rating";
 
     // Parametr pobrania punktów z każdej miejscowości
     String DEFAULT_POINTS_LOCALITY_PARAM = "*";
@@ -49,6 +51,7 @@ public interface RestConstants {
     String JSON_ID_KEY = "id";
     String JSON_LONGITUDE_KEY = "longitude";
     String JSON_LATITUDE_KEY = "latitude";
+    String JSON_RATING_KEY = "rating";
     String JSON_NAME_KEY = "name";
     String JSON_LOCALITY_KEY = "locality";
     String JSON_DESCRIPTION_KEY = "description";
@@ -59,6 +62,7 @@ public interface RestConstants {
     String JSON_CREATIONDATE_KEY = "creationdate";
     String JSON_TYPEID_KEY = "typeid";
     String JSON_USERID_KEY = "userid";
+    String JSON_POINTID_KEY = "pointid";
     String JSON_PERMISSIONID_KEY = "permissionid";
     String JSON_FIRSTLOGIN_KEY = "firstlogin";
     String JSON_UNBLOCKED_KEY = "unblocked";
@@ -74,4 +78,6 @@ public interface RestConstants {
     String STATUS_NOT_FOUND = "NOT_FOUND";
     String STATUS_TOKEN_EXPIRED = "TOKEN_EXPIRED";
     String STATUS_BAD_TOKEN = "BAD_TOKEN";
+    String STATUS_NEW = "NEW";
+    String STATUS_UPDATED = "UPDATED";
 }
