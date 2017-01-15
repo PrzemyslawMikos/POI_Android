@@ -251,7 +251,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
 
         if (id == R.id.nav_category) {
             getTypes();
-        } else if (id == R.id.nav_user_data) {
+        }else if (id == R.id.nav_google_map){
+            Intent intent = new Intent(NavigationActivity.this, MapActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_user_data) {
             displayUserData();
         } else if (id == R.id.nav_logout) {
             logout();

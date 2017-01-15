@@ -32,4 +32,6 @@ public interface MainConstants {
     String GOOGLE_NAVI_PACKAGE = "com.google.android.apps.maps";
     String GOOGLE_NAVI_CAR = "google.navigation:q=%1$s,%2$s&mode=d";
     String GOOGLE_NAVI_FOOT = "google.navigation:q=%1$s,%2$s&mode=w";
+    // Zbliżenie mapy
+    int GOOGLE_MAP_ZOOM = 15;
 }

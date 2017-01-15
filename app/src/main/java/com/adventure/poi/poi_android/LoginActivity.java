@@ -77,7 +77,9 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
                    TokenEntity token = new TokenEntity(jtoken);
                    saveToken(token);
                    saveCredentials();
-                   Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                   // TODO zmienić po testach
+                   //Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                   Intent intent = new Intent(LoginActivity.this, MapActivity.class);
                    LoginActivity.this.finish();
                    startActivity(intent);
                }

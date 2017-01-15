@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:layout_marginBottom="24dp"
+            android:id="@+id/slide_arrow"
             android:layout_gravity="center_horizontal" />
 
         <android.support.design.widget.TextInputLayout

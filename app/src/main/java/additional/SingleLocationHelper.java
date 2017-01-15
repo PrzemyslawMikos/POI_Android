@@ -15,14 +15,14 @@ import delegates.LocationDelegate;
  * Created by Przemek on 27.12.2016.
  */
 
-public class LocationHelper implements LocationListener {
+public class SingleLocationHelper implements LocationListener {
 
     private LocationManager locationManager;
     private Location currentLocation;
     private LocationDelegate locationDelegate;
     private ProgressDialog dialog;
 
-    public LocationHelper(Context context, String dialogMessage, LocationDelegate locationDelegate) {
+    public SingleLocationHelper(Context context, String dialogMessage, LocationDelegate locationDelegate) {
         this.locationDelegate = locationDelegate;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -33,19 +33,9 @@ public class LocationHelper implements LocationListener {
         }
     }
 
-    public Location getCurrentLocation() {
-        return currentLocation;
-    }
-
     public void stopLocationManager(Context context) {
+        // TODO sprawdzanie
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         locationManager.removeUpdates(this);

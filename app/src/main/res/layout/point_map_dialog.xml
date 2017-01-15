@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+    <TextView
+        android:id="@+id/map_dialog_point_name"
+        android:textSize="18dp"
+        android:text="Nazwa punktu Bang"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+    <ImageView
+        android:id="@+id/map_dialog_point_picture"
+        android:layout_width="wrap_content"
+        android:src="@mipmap/logo_dark"
+        android:layout_marginBottom="10dp"
+        android:layout_height="150dp" />
+    <View style="@style/Divider"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:text="Oceń"
+                android:background="@drawable/ic_google"
+                android:id="@+id/buttonMapRate"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/buttonNaviMap"
+                android:layout_height="30dp"
+                android:layout_width="30dp"
+                android:background="@drawable/ic_google"
+                android:text="Nawigacja"
+                android:focusable="false" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/buttonDetailsMap"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_google"
+                android:layout_width="30dp"
+                android:text="Szczegóły"
+                android:focusable="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

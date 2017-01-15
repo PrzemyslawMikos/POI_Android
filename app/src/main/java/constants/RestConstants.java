@@ -26,6 +26,8 @@ public interface RestConstants {
     String REST_POINTS_CRITERIA = REST_ROOT_PATH + "/points/%1$d/%2$s/%3$d/%4$d";
     // Dodanie punktu
     String REST_POINTS_POST = REST_ROOT_PATH + "/point";
+    // Pobieranie punktów na podstawie odległości 1 = szerokość, 2 = długość, 3 = promień w metrach
+    String REST_POINTS_DISTANCE = REST_ROOT_PATH + "/points/%1$s/%2$s/%3$d";
     // Pobranie wszystkich typow
     String REST_TYPES_GET = REST_ROOT_PATH + "/types";
     // Pobranie użytkownika po id
@@ -66,6 +68,7 @@ public interface RestConstants {
     String JSON_PERMISSIONID_KEY = "permissionid";
     String JSON_FIRSTLOGIN_KEY = "firstlogin";
     String JSON_UNBLOCKED_KEY = "unblocked";
+    String JSON_DISTANCE_KEY = "distance";
 
     // Informacje zwracane przez serwer
     String STATUS_OK = "OK";

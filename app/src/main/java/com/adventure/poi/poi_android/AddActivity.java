@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,7 +15,7 @@ import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 import additional.CaptureImageHelper;
-import additional.LocationHelper;
+import additional.SingleLocationHelper;
 import additional.PhotoToBase64;
 import additional.SharedPreferencesManager;
 import constants.MainConstants;
@@ -36,7 +35,7 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
     private Spinner spinnerTypes;
     private ImageView imagePhoto;
     private Button buttonSend;
-    private LocationHelper locationHelper;
+    private SingleLocationHelper singleLocationHelper;
     private TypesHelper typesHelper;
     private PhotoToBase64 photoToBase64;
     private String photoB64 = null;
@@ -47,11 +46,11 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         assignControls();
-        locationHelper = new LocationHelper(this, getResources().getString(R.string.location_download), new LocationDelegate() {
+        singleLocationHelper = new SingleLocationHelper(this, getResources().getString(R.string.location_download), new LocationDelegate() {
             @Override
             public void TaskCompletionResult(Location result) {
                 location = result;
-                locationHelper.stopLocationManager(getApplicationContext());
+                singleLocationHelper.stopLocationManager(getApplicationContext());
                 typesHelper.getAllTypes(getResources().getString(R.string.types_downloading));
             }
         });

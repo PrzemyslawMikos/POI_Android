@@ -23,6 +23,7 @@ public class PointEntity implements RestConstants, Serializable{
     private String addeddate;
     private Integer typeid;
     private Long userid;
+    private Integer distance;
 
     public PointEntity(Double longitude, Double latitude, Double rating, String name, String locality, String description, String picture, String mimetype, Integer typeid, Long userid) {
         this.longitude = longitude;
@@ -50,6 +51,9 @@ public class PointEntity implements RestConstants, Serializable{
         this.addeddate = jPoint.getString(JSON_ADDEDDATE_KEY);
         this.typeid= jPoint.getInt(JSON_TYPEID_KEY);
         this.userid = jPoint.getLong(JSON_USERID_KEY);
+        if(jPoint.has(JSON_DISTANCE_KEY)){
+            this.distance = jPoint.getInt(JSON_DISTANCE_KEY);
+        }
     }
 
     public JSONObject toJSON(){
@@ -168,4 +172,11 @@ public class PointEntity implements RestConstants, Serializable{
         this.typeid = typeid;
     }
 
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
 }

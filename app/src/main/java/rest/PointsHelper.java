@@ -78,6 +78,29 @@ public class PointsHelper extends EntityHelper{
         restHelper.runTask();
     }
 
+    public void getPointsDistance(String message, double latitude, double longitude, int distance){
+        HttpHeaders header = getHeaderWithBearer();
+        restHelper = new RestHelper(String.format(REST_POINTS_DISTANCE, latitude, longitude, distance), HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
+            @Override
+            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                if (restHelper.getResponseEntity().getStatusCode() == HttpStatus.OK) {
+                    String spointsarray = restHelper.getResponseEntity().getBody();
+                    JSONArray jpointsarray= new JSONArray(spointsarray);
+                    for (int i = 0; i < jpointsarray.length(); i++) {
+                        JSONObject jpoint = jpointsarray.getJSONObject(i);
+                        PointEntity type = new PointEntity(jpoint);
+                        points.add(type);
+                    }
+                    PointsHelper.super.getDelegate().TaskCompletionResult(restHelper.getResponseEntity());
+                }
+                else{
+                    showMessages(restHelper.getStatus());
+                }
+            }
+        });
+        restHelper.runTask();
+    }
+
     public void postPoint(String message, PointEntity point){
         HttpHeaders header = getHeaderWithBearer();
         restHelper = new RestHelper(REST_POINTS_POST, HttpMethod.POST, header, point.toJSON(), super.getActivity(), message, new RestTaskDelegate() {

@@ -61,7 +61,9 @@
     <string name="menu_google_map">Widok mapy</string>
     <string name="menu_user_data">Twoje dane</string>
     <string name="menu_logout">Wyloguj się</string>
-<!--BLAAAAAAAAAAAAAAAAAAAAAAAAAAA tutaj ok-->
+
+    <string name="map_menu_distance">%1$d m</string>
+    <!--BLAAAAAAAAAAAAAAAAAAAAAAAAAAA tutaj ok-->
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -71,4 +73,5 @@
     <string name="title_activity_point_view">PointViewActivity</string>
     <string name="large_text">Bla bla</string>
     <string name="title_activity_point">PointActivity</string>
+    <string name="title_activity_map">Map</string>
 </resources>
