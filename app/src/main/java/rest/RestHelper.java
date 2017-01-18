@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.adventure.poi.poi_android.R;
@@ -22,6 +23,10 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
 import additional.NetworkStateManager;
 import additional.SharedPreferencesManager;
 import constants.MainConstants;
@@ -159,13 +164,16 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
 
         protected void onPreExecute() {
             this.dialog.setMessage(loadDialogMessage);
-            this.dialog.show();
+            if(!activity.isDestroyed()){
+                this.dialog.show();
+            }
         }
 
         @Override
         protected ResponseEntity<String> doInBackground(Void... params) {
             try {
                 RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
                 HttpEntity<String> entity;
                 if(requestBody != null) {
                     entity = new HttpEntity<>(requestBody.toString(), requestHeader);

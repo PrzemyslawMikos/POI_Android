@@ -7,7 +7,7 @@ package constants;
 public interface RestConstants {
 
     // Główna sciezka hosta
-    String REST_MAIN_HOST_PATH = "http://192.168.1.6";
+    String REST_MAIN_HOST_PATH = "http://192.168.1.8";
     // Sciezki Rest API
     String REST_ROOT_PATH = REST_MAIN_HOST_PATH + "/POI/Web/app_dev.php/api";
     // Sciezka zdjęć
@@ -30,6 +30,8 @@ public interface RestConstants {
     String REST_POINTS_DISTANCE = REST_ROOT_PATH + "/points/%1$s/%2$s/%3$d";
     // Pobranie wszystkich typow
     String REST_TYPES_GET = REST_ROOT_PATH + "/types";
+    // Pobranie typu o podanym id
+    String REST_TYPES_ID_GET = REST_ROOT_PATH + "/types/%1$d";
     // Pobranie użytkownika po id
     String REST_USERS_GET_ID = REST_ROOT_PATH + "/user/%1$d";
     // Dodanie oceny

@@ -20,6 +20,8 @@ public interface MainConstants {
     // Nazwa tymczasowego zdjęcia
     String IMAGE_TMP_NAME = "TmpImgPoi.jpeg";
 
+    String IMAGE_MIMETYPE = "jpeg";
+
     // Rozmiar zdjęć
     int IMAGE_RESIZED_HEIGHT = 600;
     int IMAGE_RESIZED_WIDTH = 800;
@@ -34,4 +36,6 @@ public interface MainConstants {
     String GOOGLE_NAVI_FOOT = "google.navigation:q=%1$s,%2$s&mode=w";
     // Zbliżenie mapy
     int GOOGLE_MAP_ZOOM = 15;
+    // Minimalny dystans
+    int GOOGLE_MIN_DISTANCE = 50;
 }

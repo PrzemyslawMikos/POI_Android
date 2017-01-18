@@ -34,7 +34,7 @@
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
             <TextView
-                android:text="Zdjęcie"
+                android:text="@string/add_picture"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center"
@@ -49,7 +49,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="Kategoria:"
+                    android:text="@string/add_type_name"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
                     android:gravity="center"
@@ -73,10 +73,11 @@
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nazwa miejsca zainteresowanias"
+                    android:hint="@string/add_point_name"
                     android:ems="10"
                     android:layout_marginBottom="18dp"
-                    android:id="@+id/editTextName" />
+                    android:id="@+id/editTextName"
+                    android:inputType="textPersonName" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -87,10 +88,11 @@
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Lokalizacja (nazwa miejscowości)"
+                    android:hint="@string/add_locality"
                     android:ems="10"
                     android:layout_marginBottom="18dp"
-                    android:id="@+id/editTextLocality" />
+                    android:id="@+id/editTextLocality"
+                    android:inputType="textPersonName" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -105,7 +107,7 @@
                     android:ems="10"
                     android:layout_marginBottom="18dp"
                     android:id="@+id/editTextDescription"
-                    android:hint="Opis (co ciekawego można tu zobaczyć/zrobić)" />
+                    android:hint="@string/add_description" />
             </android.support.design.widget.TextInputLayout>
 
             <RatingBar
@@ -123,7 +125,7 @@
                 android:isIndicator="false"/>
 
             <Button
-                android:text="Dodaj"
+                android:text="@string/add_add_button"
                 android:textColor="@color/accent"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

@@ -42,6 +42,26 @@ public class TypesHelper extends EntityHelper{
         return listTypesNames;
     }
 
+    public void getTypeById(String message, long typeid){
+        HttpHeaders header = super.getHeaderWithBearer();
+        restHelper = new RestHelper(String.format(REST_TYPES_ID_GET, typeid), HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
+            @Override
+            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                if (restHelper.getResponseEntity().getStatusCode() == HttpStatus.OK) {
+                    String stype = restHelper.getResponseEntity().getBody();
+                    JSONObject jtype = new JSONObject(stype);
+                    TypeEntity typeEntity = new TypeEntity(jtype);
+                    types.add(typeEntity);
+                    TypesHelper.super.getDelegate().TaskCompletionResult(restHelper.getResponseEntity());
+                }
+                else{
+                    showMessages(restHelper.getStatus());
+                }
+            }
+        });
+        restHelper.runTask();
+    }
+
     public void getAllTypes(String message){
         HttpHeaders header = super.getHeaderWithBearer();
         restHelper = new RestHelper(REST_TYPES_GET, HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {

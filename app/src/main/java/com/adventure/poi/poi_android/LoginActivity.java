@@ -1,13 +1,17 @@
 package com.adventure.poi.poi_android;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,7 +19,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import additional.PermissionHelper;
 import additional.SharedPreferencesManager;
+import additional.SnackbarManager;
 import delegates.RestTaskDelegate;
 import constants.MainConstants;
 import constants.RestConstants;
@@ -45,12 +52,24 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     }
 
     public void onLoginClick(View v){
-        login(editLogin.getText().toString(), editPassword.getText().toString());
+        Context applicationContext = getApplicationContext();
+        if(PermissionHelper.checkLocationPermission(applicationContext) && PermissionHelper.checkWriteExternalStoragePermission(applicationContext) && PermissionHelper.checkCameraPermission(applicationContext)){
+            login(editLogin.getText().toString(), editPassword.getText().toString());
+        }
+        else{
+            SnackbarManager.showSnackbarWithOptionIntent(LoginActivity.this, getResources().getString(R.string.permissions_request), getResources().getString(R.string.application_options), Snackbar.LENGTH_LONG, PermissionHelper.getApplicationPermissionsSettings(applicationContext));
+        }
     }
 
     public void onRegisterClick(View v){
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
+        Context applicationContext = getApplicationContext();
+        if(PermissionHelper.checkLocationPermission(applicationContext) && PermissionHelper.checkWriteExternalStoragePermission(applicationContext) && PermissionHelper.checkCameraPermission(applicationContext)){
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        }
+        else{
+            SnackbarManager.showSnackbarWithOptionIntent(LoginActivity.this, getResources().getString(R.string.permissions_request), getResources().getString(R.string.application_options), Snackbar.LENGTH_LONG, PermissionHelper.getApplicationPermissionsSettings(applicationContext));
+        }
     }
 
     @Override
@@ -77,9 +96,7 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
                    TokenEntity token = new TokenEntity(jtoken);
                    saveToken(token);
                    saveCredentials();
-                   // TODO zmienić po testach
-                   //Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-                   Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+                   Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                    LoginActivity.this.finish();
                    startActivity(intent);
                }
@@ -92,9 +109,15 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     }
 
     private void loginIfRemember(){
-        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
-        if(sharedPreferencesManager.getPreferenceBoolean(MainConstants.PREFERENCE_REMEMBER_ME)){
-            login(sharedPreferencesManager.getPreferenceString(PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(PREFERENCE_PASSWORD));
+        Context applicationContext = getApplicationContext();
+        if(PermissionHelper.checkLocationPermission(applicationContext) && PermissionHelper.checkWriteExternalStoragePermission(applicationContext) && PermissionHelper.checkCameraPermission(applicationContext)){
+            SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
+            if(sharedPreferencesManager.getPreferenceBoolean(MainConstants.PREFERENCE_REMEMBER_ME)){
+                login(sharedPreferencesManager.getPreferenceString(PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(PREFERENCE_PASSWORD));
+            }
+        }
+        else{
+            SnackbarManager.showSnackbarWithOptionIntent(LoginActivity.this, getResources().getString(R.string.permissions_request), getResources().getString(R.string.application_options), Snackbar.LENGTH_LONG, PermissionHelper.getApplicationPermissionsSettings(applicationContext));
         }
     }
 

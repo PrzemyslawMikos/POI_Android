@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -238,17 +237,16 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         LayoutInflater linflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View customView;
         customView = linflater.inflate(R.layout.info_user, null);
+        setTitle(String.format(getResources().getString(R.string.user_data), user.getUsername()));
         linearLayout.addView(customView);
-        // TODO udoskonalić wyświetlanie danych użytkownika
         TextView textView = (TextView) findViewById(R.id.textViewUserInfo);
-        textView.setText("Nick: " + user.getNickname() + "\nNazwa użytkownika: " + user.getUsername() + "\nEmail: " + user.getEmail() + "\nTelefon: " + user.getPhone() + "\nData rejestracji: " + user.getCreationdate());
+        textView.setText(String.format(getResources().getString(R.string.user_info_data), user.getNickname(), user.getUsername(), user.getEmail(), user.getPhone(), user.getCreationdate()));
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.nav_category) {
             getTypes();
         }else if (id == R.id.nav_google_map){
@@ -259,7 +257,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_logout) {
             logout();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

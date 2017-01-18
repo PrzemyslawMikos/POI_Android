@@ -1,8 +1,14 @@
 package rest;
 
 import android.app.Activity;
+
+import org.springframework.http.ContentCodingType;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
 import additional.SharedPreferencesManager;
 import delegates.RestTaskDelegate;
 import constants.MainConstants;
@@ -47,6 +53,7 @@ public class EntityHelper implements RestConstants, MainConstants {
     protected HttpHeaders getHeaderWithBearer(){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
         headers.set(REQUEST_HEADER_AUTHORIZATION, String.format(REQUEST_HEADER_BEARER, this.getToken()));
         return headers;
     }

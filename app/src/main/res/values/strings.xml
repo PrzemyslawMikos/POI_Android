@@ -2,6 +2,12 @@
     <string name="app_name">POI</string>
     <string name="server_exception">Błąd serwera, sprubój ponownie póżniej.</string>
 
+    <string name="user_data">Twoje dane: %1$s</string>
+    <string name="user_info_data">Nick: %1$s\nNazwa użtykownika: %2$s\nEmail: %3$s\nNr. telefonu: %4$s\nData dołączenia: %5$s</string>
+
+    <string name="permissions_request">Nadaj zezwolenia!</string>
+    <string name="application_options">Opcje aplikacji</string>
+
     <string name="login_dialog_text">Logowanie...</string>
     <string name="login_snackbar_bad_credentials">Nie zalogowano. Błędne dane logowania.</string>
     <string name="login_bad_data">Złe dane logowania.</string>
@@ -29,7 +35,7 @@
 
     <string name="google_address_no_data">Brak danych</string>
 
-    <string name="types_not_found">Nie znaleziono punktów z wybranymi kryteriami.</string>
+    <string name="types_not_found">Nie znaleziono typu.</string>
     <string name="types_downloading">Pobieranie kategorii...</string>
 
     <string name="enable_network_text">Musisz mieć dostęp do internetu.\nWłącz Wi-Fi lub dane komórkowe.</string>
@@ -57,12 +63,27 @@
     <string name="register_activity_password">Hasło</string>
     <string name="register_activity_register">Zarejestruj</string>
 
-    <string name="menu_category_list">Lista kategorii</string>
-    <string name="menu_google_map">Widok mapy</string>
+    <string name="menu_category_list">Według kategorii</string>
+    <string name="menu_google_map">W Twojej okolicy</string>
     <string name="menu_user_data">Twoje dane</string>
     <string name="menu_logout">Wyloguj się</string>
 
+    <string name="add_new_preparing_picture">Przygotowywanie zdjęcia...</string>
+    <string name="add_new_point_dialog">Dodawanie punktu...</string>
+    <string name="add_new_point_pending">Trwa jeszcze zbieranie danych.</string>
+    <string name="add_new_point_done">Punkt został dodany</string>
+    <string name="add_point_name">Nazwa miejsca zainteresowania</string>
+    <string name="add_type_name">Kategoria:</string>
+    <string name="add_picture">Zdjęcie</string>
+    <string name="add_locality">Lokalizacja (nazwa miejscowości)</string>
+    <string name="add_description">Opis (co ciekawego można tu zobaczyć/zrobić)</string>
+    <string name="add_add_button">Dodaj</string>
+
     <string name="map_menu_distance">%1$d m</string>
+    <string name="map_searching_dialog">W promieniu: %1$dm</string>
+    <string name="map_request_location">Musisz włączyć usługę lokalizacji(GPS).\nPrzejdz do ustawień.</string>
+    <string name="map_dialog_rating">Ocena: %1$s</string>
+    <string name="map_downloading_data">Pobieranie danych</string>
     <!--BLAAAAAAAAAAAAAAAAAAAAAAAAAAA tutaj ok-->
 
 
@@ -74,4 +95,5 @@
     <string name="large_text">Bla bla</string>
     <string name="title_activity_point">PointActivity</string>
     <string name="title_activity_map">Map</string>
+
 </resources>
