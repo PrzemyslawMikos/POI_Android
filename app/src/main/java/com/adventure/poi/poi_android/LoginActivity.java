@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     private LoginHelper loginHelper;
     private EditText editLogin, editPassword;
     private CheckBox checkBoxRememberMe;
+    private boolean isRemember = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,7 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
         if(PermissionHelper.checkLocationPermission(applicationContext) && PermissionHelper.checkWriteExternalStoragePermission(applicationContext) && PermissionHelper.checkCameraPermission(applicationContext)){
             SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
             if(sharedPreferencesManager.getPreferenceBoolean(MainConstants.PREFERENCE_REMEMBER_ME)){
+                isRemember = true;
                 login(sharedPreferencesManager.getPreferenceString(PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(PREFERENCE_PASSWORD));
             }
         }
@@ -135,9 +137,11 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     }
 
     private void saveCredentials(){
-        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
-        sharedPreferencesManager.setCredentials(editLogin.getText().toString(), editPassword.getText().toString());
-        sharedPreferencesManager.setKeyValueBoolean(MainConstants.PREFERENCE_REMEMBER_ME, checkBoxRememberMe.isChecked());
+        if(!isRemember){
+            SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
+            sharedPreferencesManager.setCredentials(editLogin.getText().toString(), editPassword.getText().toString());
+            sharedPreferencesManager.setKeyValueBoolean(MainConstants.PREFERENCE_REMEMBER_ME, checkBoxRememberMe.isChecked());
+        }
     }
 
     private void saveToken(TokenEntity token){

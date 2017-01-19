@@ -3,6 +3,7 @@
     <color name="colorAccent">#FF5722</color>
     <color name="colorAccentDark">#FF5000</color>
     <color name="colorPrimary">#f97a40</color>
+    <color name="colorAccentDarker">#af3700</color>
     <color name="accentWhite">#FFFFFF</color>
     <color name="colorIron">#CCCCCC</color>
     <color name="colorGray">#222222</color>
