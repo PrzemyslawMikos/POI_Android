@@ -126,5 +126,4 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
             SnackbarManager.showSnackbar(AddActivity.this, getResources().getString(R.string.add_new_point_pending), Snackbar.LENGTH_LONG);
         }
     }
-
 }

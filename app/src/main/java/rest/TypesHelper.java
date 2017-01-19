@@ -18,7 +18,7 @@ import entity.StatusEntity;
 import entity.TypeEntity;
 
 /**
- * Created by Przemek on 13.12.2016.
+ * Created by Przemysław Mikos on 13.12.2016.
  */
 
 public class TypesHelper extends EntityHelper{

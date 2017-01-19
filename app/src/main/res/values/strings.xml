@@ -89,6 +89,7 @@
     <string name="map_request_location">Musisz włączyć usługę lokalizacji(GPS).\nPrzejdz do ustawień.</string>
     <string name="map_dialog_rating">Ocena: %1$s</string>
     <string name="map_downloading_data">Pobieranie danych</string>
+
     <!--BLAAAAAAAAAAAAAAAAAAAAAAAAAAA tutaj ok-->
 
 
@@ -96,8 +97,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_point_view">PointViewActivity</string>
     <string name="large_text">Bla bla</string>
+    <string name="title_activity_point_view">PointViewActivity</string>
     <string name="title_activity_point">PointActivity</string>
     <string name="title_activity_map">Map</string>
 

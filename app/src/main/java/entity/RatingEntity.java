@@ -6,7 +6,7 @@ import java.io.Serializable;
 import constants.RestConstants;
 
 /**
- * Created by Przemek on 12.01.2017.
+ * Created by Przemysław Mikos on 12.01.2017.
  */
 
 public class RatingEntity implements RestConstants, Serializable {

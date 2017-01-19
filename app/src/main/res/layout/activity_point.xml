@@ -23,7 +23,7 @@
             app:expandedTitleGravity="center"
             app:expandedTitleMarginBottom="10dp"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/primary"
+            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar

@@ -4,39 +4,26 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-
-import com.adventure.poi.poi_android.NavigationActivity;
 import com.adventure.poi.poi_android.PointActivity;
 import com.adventure.poi.poi_android.R;
-
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import constants.MainConstants;
 import constants.RestConstants;
 import delegates.ImageTaskDelegate;
 import delegates.RestTaskDelegate;
 import entity.PointEntity;
-import entity.RatingEntity;
 import google.GoogleNavi;
-import rest.LoginHelper;
-import rest.RatingsHelper;
 import rest.TypesHelper;
 
-import static constants.RestConstants.REST_POINTS_IMAGE;
-
 /**
- * Created by Przemek on 12.01.2017.
+ * Created by Przemysław Mikos on 12.01.2017.
  */
 
 public class MapPointDialog implements MainConstants, RestConstants {
@@ -100,7 +87,6 @@ public class MapPointDialog implements MainConstants, RestConstants {
         buttonMapDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("click", "nope");
                 typesHelper = new TypesHelper(activity, new RestTaskDelegate() {
                     @Override
                     public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {

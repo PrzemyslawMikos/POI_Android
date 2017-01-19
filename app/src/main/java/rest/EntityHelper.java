@@ -1,14 +1,10 @@
 package rest;
 
 import android.app.Activity;
-
-import org.springframework.http.ContentCodingType;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-
 import java.nio.charset.Charset;
 import java.util.Arrays;
-
 import additional.SharedPreferencesManager;
 import delegates.RestTaskDelegate;
 import constants.MainConstants;
@@ -16,7 +12,7 @@ import constants.RestConstants;
 import entity.StatusEntity;
 
 /**
- * Created by Przemek on 13.12.2016.
+ * Created by Przemysław Mikos on 13.12.2016.
  */
 
 public class EntityHelper implements RestConstants, MainConstants {

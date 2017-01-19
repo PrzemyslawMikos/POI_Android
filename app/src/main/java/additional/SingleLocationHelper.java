@@ -10,7 +10,7 @@ import android.os.Bundle;
 import delegates.LocationDelegate;
 
 /**
- * Created by Przemek on 27.12.2016.
+ * Created by Przemysław Mikos on 27.12.2016.
  */
 
 public class SingleLocationHelper implements LocationListener {

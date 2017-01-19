@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.provider.Settings;
 
 /**
- * Created by Przemek on 17.01.2017.
+ * Created by Przemysław Mikos on 17.01.2017.
  */
 
 public final class PermissionHelper {

@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_marginLeft="10dp"
-            android:textColor="@color/accent"
+            android:textColor="@color/accentWhite"
             android:text="@string/menu_category_list"
             android:textAppearance="?android:attr/textAppearanceButton"
             android:layout_toRightOf="@id/image1"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_marginLeft="10dp"
-            android:textColor="@color/accent"
+            android:textColor="@color/accentWhite"
             android:text="@string/menu_google_map"
             android:textAppearance="?android:attr/textAppearanceButton"
             android:layout_toRightOf="@id/image2"
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_marginLeft="10dp"
-            android:textColor="@color/accent"
+            android:textColor="@color/accentWhite"
             android:text="@string/menu_add_point"
             android:textAppearance="?android:attr/textAppearanceButton"
             android:layout_toRightOf="@id/image3"
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_marginLeft="10dp"
-        android:textColor="@color/accent"
+        android:textColor="@color/accentWhite"
         android:text="@string/menu_user_data"
         android:textAppearance="?android:attr/textAppearanceButton"
         android:layout_toRightOf="@id/image4"
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_marginLeft="10dp"
-            android:textColor="@color/accent"
+            android:textColor="@color/accentWhite"
             android:text="@string/menu_logout"
             android:textAppearance="?android:attr/textAppearanceButton"
             android:layout_toRightOf="@id/image5"

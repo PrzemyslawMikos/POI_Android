@@ -8,7 +8,7 @@ import java.lang.ref.WeakReference;
 import java.net.URL;
 
 /**
- * Created by Przemek on 08.01.2017.
+ * Created by Przemysław Mikos on 08.01.2017.
  */
 
 public class PictureLoader extends AsyncTask <URL, Void, Bitmap> {

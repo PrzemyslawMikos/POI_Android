@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import delegates.PhotoToBase64Delegate;
 
 /**
- * Created by Przemek on 14.01.2017.
+ * Created by Przemysław Mikos on 14.01.2017.
  */
 
 public class PhotoToBase64 extends AsyncTask<Bitmap, Void, String> {

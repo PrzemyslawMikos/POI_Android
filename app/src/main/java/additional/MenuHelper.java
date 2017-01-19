@@ -6,7 +6,7 @@ import com.adventure.poi.poi_android.R;
 import java.util.HashMap;
 
 /**
- * Created by Przemek on 19.01.2017.
+ * Created by Przemysław Mikos on 19.01.2017.
  */
 
 public class MenuHelper {

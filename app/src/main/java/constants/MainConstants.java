@@ -1,7 +1,7 @@
 package constants;
 
 /**
- * Created by Przemek on 12.12.2016.
+ * Created by Przemysław Mikos on 12.12.2016.
  */
 
 public interface MainConstants {

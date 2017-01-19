@@ -18,7 +18,7 @@ import constants.MainConstants;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by Przemek on 13.01.2017.
+ * Created by Przemysław Mikos on 13.01.2017.
  */
 
 public class CaptureImageHelper implements MainConstants{

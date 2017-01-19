@@ -6,10 +6,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
 import java.nio.charset.Charset;
 import java.util.Arrays;
-
 import constants.RestConstants;
 import delegates.RestTaskDelegate;
 import entity.UserEntity;

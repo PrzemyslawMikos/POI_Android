@@ -14,7 +14,7 @@ import entity.RatingEntity;
 import entity.StatusEntity;
 
 /**
- * Created by Przemek on 12.01.2017.
+ * Created by Przemysław Mikos on 12.01.2017.
  */
 
 public class RatingsHelper extends EntityHelper{

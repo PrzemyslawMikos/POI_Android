@@ -126,7 +126,7 @@
 
             <Button
                 android:text="@string/add_add_button"
-                android:textColor="@color/accent"
+                android:textColor="@color/accentWhite"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"

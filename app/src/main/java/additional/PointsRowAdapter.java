@@ -14,7 +14,7 @@ import constants.RestConstants;
 import entity.PointEntity;
 
 /**
- * Created by Przemek on 02.01.2017.
+ * Created by Przemysław Mikos on 02.01.2017.
  */
 
 public class PointsRowAdapter extends ArrayAdapter<PointEntity> implements RestConstants{
@@ -66,33 +66,6 @@ public class PointsRowAdapter extends ArrayAdapter<PointEntity> implements RestC
             }
         }
         return convertView;
-
-
-//        TypesRowAdapter.RowTypeEntity holder;
-//        if (convertView == null) {
-//            convertView = layoutInflater.inflate(R.layout.row_list_points, null);
-//            holder = new TypesRowAdapter.RowTypeEntity();
-//            holder.imageViewImage = (ImageView) convertView.findViewById(R.id.imageViewPointPicture);
-//            holder.textViewName = (TextView) convertView.findViewById(R.id.textViewPointName);
-//            holder.textViewDescription = (TextView) convertView.findViewById(R.id.textViewPointDescription);
-//            holder.textViewDate = (TextView) convertView.findViewById(R.id.textViewPointDate);
-//            convertView.setTag(holder);
-//        } else {
-//            holder = (TypesRowAdapter.RowTypeEntity) convertView.getTag();
-//        }
-//
-//        PointEntity object = data.get(position);
-//        holder.textViewName.setText(object.getName());
-//        holder.textViewDescription.setText(object.getDescription());
-//        holder.textViewDate.setText(object.getAddeddate());
-//        if (holder.imageViewImage != null) {
-//            try{
-//                new PictureLoader(holder.imageViewImage).execute(new URL(String.format(REST_POINTS_IMAGE, object.getPicture())));
-//            }catch (Exception e){
-//
-//            }
-//        }
-//        return convertView;
     }
 
     static class RowPointEntity
@@ -100,5 +73,4 @@ public class PointsRowAdapter extends ArrayAdapter<PointEntity> implements RestC
         ImageView imageViewImage;
         TextView textViewName, textViewDescription, textViewDate, textViewRating;
     }
-
 }

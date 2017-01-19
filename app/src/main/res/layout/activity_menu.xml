@@ -19,7 +19,7 @@
             android:textAlignment="center"
             android:textSize="20sp"
             android:background="@color/colorAccentDark"
-            android:textColor="@color/accent"
+            android:textColor="@color/accentWhite"
             android:text="@string/mainmenu_type_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
@@ -66,7 +66,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/accent"
+        android:background="@color/accentWhite"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">

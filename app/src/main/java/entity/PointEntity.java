@@ -6,7 +6,7 @@ import java.io.Serializable;
 import constants.RestConstants;
 
 /**
- * Created by Przemek on 12.12.2016.
+ * Created by Przemysław Mikos on 12.12.2016.
  */
 
 public class PointEntity implements RestConstants, Serializable{

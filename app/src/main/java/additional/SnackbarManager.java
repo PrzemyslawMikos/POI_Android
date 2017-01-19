@@ -8,7 +8,7 @@ import android.view.View;
 import com.adventure.poi.poi_android.R;
 
 /**
- * Created by Przemek on 07.01.2017.
+ * Created by Przemysław Mikos on 07.01.2017.
  */
 
 public final class SnackbarManager {
