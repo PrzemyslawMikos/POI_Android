@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,7 +68,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50,50, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 50,50, this);
         listMarkers = new ArrayList<>();
         textViewDistance = (TextView) findViewById(R.id.textViewDistance);
         setDistanceSeekBar();
@@ -80,7 +79,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     private boolean isLocationProviderEnabled(){
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
             return true;
         }
         else{
@@ -146,7 +145,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         buttonSearchDistance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Location", "enabled");
                 if(locationServiceEnabled) {
                     pointsHelper = new PointsHelper(MapActivity.this, new RestTaskDelegate() {
                         @Override
@@ -214,7 +212,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d("location", "center");
         userLocation = location;
         if(userCircle == null){
             setUserMapCircle();

@@ -17,6 +17,9 @@ public interface MainConstants {
     // Uprawnienia
     int PERMISSION = 1;
 
+    // Brak type
+    int NO_TYPE = 0;
+
     // Nazwa tymczasowego zdjęcia
     String IMAGE_TMP_NAME = "TmpImgPoi.jpeg";
 

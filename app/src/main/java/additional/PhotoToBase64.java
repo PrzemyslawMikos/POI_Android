@@ -13,7 +13,6 @@ import delegates.PhotoToBase64Delegate;
  */
 
 public class PhotoToBase64 extends AsyncTask<Bitmap, Void, String> {
-//TODO wyświetlić dialogboxa który dzisiaj nie działa xddd
 
     private Context context;
     private PhotoToBase64Delegate pictureToBase64Delegate;
@@ -24,14 +23,10 @@ public class PhotoToBase64 extends AsyncTask<Bitmap, Void, String> {
         this.pictureToBase64Delegate = photoToBase64Delegate;
         this.context = context;
         this.dialogMessage = dialogMessage;
-//        this.dialog = new ProgressDialog(context);
-//        this.dialog.setCancelable(false);
     }
 
     @Override
     protected void onPreExecute() {
-//        this.dialog.setMessage(dialogMessage);
-//        this.dialog.show();
     }
 
     @Override
@@ -46,9 +41,6 @@ public class PhotoToBase64 extends AsyncTask<Bitmap, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-//        if (dialog.isShowing()) {
-//            dialog.dismiss();
-//        }
         if(result != null){
             pictureToBase64Delegate.TaskCompletionResult(result);
         }

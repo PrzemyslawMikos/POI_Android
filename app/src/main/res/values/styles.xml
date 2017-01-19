@@ -33,6 +33,12 @@
         <item name="android:background">@color/iron</item>
     </style>
 
+    <style name="DividerDark">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/colorAccentDark</item>
+    </style>
+
     <style name="ActionBar" parent="@android:style/Widget.ActionBar">
         <item name="android:titleTextStyle">@style/ActionBar.Title</item>
         <item name="android:subtitleTextStyle">@style/ActionBar.Subtitle</item>

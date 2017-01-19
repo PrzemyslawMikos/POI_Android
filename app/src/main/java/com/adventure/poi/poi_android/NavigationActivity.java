@@ -49,7 +49,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
     private LinearLayout linearLayout;
     private String selectedLocality;
     private int offset = 0;
-    private int limit = 10;
+    private int limit = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

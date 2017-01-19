@@ -20,7 +20,7 @@
     <string name="register_complete">Rejestracja przebiegła pomyślnie. Zaloguj się.</string>
 
     <string name="point_bad_url">Błędne dane do pobrania zdjęcia.</string>
-    <string name="point_criteria_not_found">Nie znaleziono żadnych punktów.</string>
+    <string name="point_criteria_not_found">Nie znaleziono więcej punktów.</string>
     <string name="point_added">Punkt został dodany pomyślnie.</string>
     <string name="point_searching">Wyszukiwanie punktów...</string>
     <string name="point_google_locality">Lokalizacja według Google</string>
@@ -44,7 +44,11 @@
     <string name="downloading_user_data">Pobieranie Twoich danych</string>
     <string name="user_not_found">Nie znaleziono Twoich danych</string>
 
-    <string name="navigation_activity_type_title">Kategorie</string>
+    <string name="mainmenu_type_title">Wybierz kategorię</string>
+    <string name="mainmenu_points_title">Kategoria: %1$s Lokalizacja: %2$s</string>
+    <string name="mainmenu_none">brak</string>
+
+    <string name="navigation_activity_type_title">Wybierz kategorię</string>
     <string name="navigation_activity_point_title">Punkty: %1$s</string>
     <string name="all_points">Wszystkie najnowsze</string>
     <string name="rest_server_unavailable">Serwer niedostępny, sprubój ponownie później.</string>
@@ -66,6 +70,7 @@
     <string name="menu_category_list">Według kategorii</string>
     <string name="menu_google_map">W Twojej okolicy</string>
     <string name="menu_user_data">Twoje dane</string>
+    <string name="menu_add_point">Dodaj punkt</string>
     <string name="menu_logout">Wyloguj się</string>
 
     <string name="add_new_preparing_picture">Przygotowywanie zdjęcia...</string>

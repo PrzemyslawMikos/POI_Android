@@ -23,7 +23,7 @@ public class SingleLocationHelper implements LocationListener {
         this.locationDelegate = locationDelegate;
         locationManager = (LocationManager) activity.getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         if (PermissionHelper.checkLocationPermission(activity.getApplicationContext())) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
             this.dialog = new ProgressDialog(activity);
             this.dialog.setMessage(dialogMessage);
             this.dialog.show();

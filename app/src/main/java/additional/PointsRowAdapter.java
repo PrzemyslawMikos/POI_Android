@@ -1,6 +1,5 @@
 package additional;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,57 +7,57 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.adventure.poi.poi_android.R;
-
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
-
+import constants.RestConstants;
 import entity.PointEntity;
-import entity.TypeEntity;
-
-import static constants.RestConstants.REST_POINTS_IMAGE;
-import static constants.RestConstants.REST_TYPES_IMAGE;
 
 /**
  * Created by Przemek on 02.01.2017.
  */
 
-public class PointsRowAdapter extends ArrayAdapter<PointEntity> {
+public class PointsRowAdapter extends ArrayAdapter<PointEntity> implements RestConstants{
 
-    Context context;
-    int layoutId;
     private LayoutInflater layoutInflater;
-    ArrayList<PointEntity> data = null;
+    private ArrayList<PointEntity> data = null;
 
     public PointsRowAdapter(Context context, int layoutId, ArrayList<PointEntity> data) {
-        super(context,layoutId, data);
+        super(context, layoutId, data);
         layoutInflater = LayoutInflater.from(context);
-        this.context = context;
         this.data = data;
-        this.layoutId = layoutId;
+    }
+
+    public void addToList(ArrayList<PointEntity> listPoints){
+        for (PointEntity point: listPoints) {
+            data.add(point);
+        }
+    }
+
+    public ArrayList<PointEntity> getList(){
+        return data;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        TypesRowAdapter.RowTypeEntity holder;
+        PointsRowAdapter.RowPointEntity holder;
+        PointEntity object = data.get(position);
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.row_list_points, null);
-            holder = new TypesRowAdapter.RowTypeEntity();
+            holder = new PointsRowAdapter.RowPointEntity();
             holder.imageViewImage = (ImageView) convertView.findViewById(R.id.imageViewPointPicture);
             holder.textViewName = (TextView) convertView.findViewById(R.id.textViewPointName);
             holder.textViewDescription = (TextView) convertView.findViewById(R.id.textViewPointDescription);
             holder.textViewDate = (TextView) convertView.findViewById(R.id.textViewPointDate);
+            holder.textViewRating = (TextView) convertView.findViewById(R.id.textViewPointRating);
             convertView.setTag(holder);
         } else {
-            holder = (TypesRowAdapter.RowTypeEntity) convertView.getTag();
+            holder = (PointsRowAdapter.RowPointEntity) convertView.getTag();
         }
-
-        PointEntity object = data.get(position);
         holder.textViewName.setText(object.getName());
         holder.textViewDescription.setText(object.getDescription());
         holder.textViewDate.setText(object.getAddeddate());
+        holder.textViewRating.setText(object.getRating().toString());
         if (holder.imageViewImage != null) {
             try{
                 new PictureLoader(holder.imageViewImage).execute(new URL(String.format(REST_POINTS_IMAGE, object.getPicture())));
@@ -67,12 +66,39 @@ public class PointsRowAdapter extends ArrayAdapter<PointEntity> {
             }
         }
         return convertView;
+
+
+//        TypesRowAdapter.RowTypeEntity holder;
+//        if (convertView == null) {
+//            convertView = layoutInflater.inflate(R.layout.row_list_points, null);
+//            holder = new TypesRowAdapter.RowTypeEntity();
+//            holder.imageViewImage = (ImageView) convertView.findViewById(R.id.imageViewPointPicture);
+//            holder.textViewName = (TextView) convertView.findViewById(R.id.textViewPointName);
+//            holder.textViewDescription = (TextView) convertView.findViewById(R.id.textViewPointDescription);
+//            holder.textViewDate = (TextView) convertView.findViewById(R.id.textViewPointDate);
+//            convertView.setTag(holder);
+//        } else {
+//            holder = (TypesRowAdapter.RowTypeEntity) convertView.getTag();
+//        }
+//
+//        PointEntity object = data.get(position);
+//        holder.textViewName.setText(object.getName());
+//        holder.textViewDescription.setText(object.getDescription());
+//        holder.textViewDate.setText(object.getAddeddate());
+//        if (holder.imageViewImage != null) {
+//            try{
+//                new PictureLoader(holder.imageViewImage).execute(new URL(String.format(REST_POINTS_IMAGE, object.getPicture())));
+//            }catch (Exception e){
+//
+//            }
+//        }
+//        return convertView;
     }
 
     static class RowPointEntity
     {
         ImageView imageViewImage;
-        TextView textViewName, textViewDescription, textViewDate;
+        TextView textViewName, textViewDescription, textViewDate, textViewRating;
     }
 
 }
