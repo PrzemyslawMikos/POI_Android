@@ -14,10 +14,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
+import java.util.ArrayList;
 import java.util.List;
 import additional.CaptureImageHelper;
+import additional.InputValidation;
 import additional.SingleLocationHelper;
-import additional.PhotoToBase64;
+import task.PhotoToBase64;
 import additional.SharedPreferencesManager;
 import additional.SnackbarManager;
 import additional.ToastManager;
@@ -26,6 +28,7 @@ import delegates.LocationDelegate;
 import delegates.PhotoToBase64Delegate;
 import delegates.RestTaskDelegate;
 import entity.PointEntity;
+import entity.TypeEntity;
 import rest.PointsHelper;
 import rest.TypesHelper;
 
@@ -42,6 +45,7 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
     private PhotoToBase64 photoToBase64;
     private String photoB64 = null;
     private Location location = null;
+    private ArrayList<TypeEntity> typeEntityArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +92,7 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
             @Override
             public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
                 fillSpinner(typesHelper.getTypesNamesList());
+                typeEntityArrayList = typesHelper.getTypes();
             }
         });
     }
@@ -109,21 +114,23 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
     }
 
     public void onSendClick(View v){
-        if(photoB64 != null && location != null){
-            PointsHelper pointsHelper = new PointsHelper(AddActivity.this, new RestTaskDelegate() {
-                @Override
-                public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-                    ToastManager.showToast(getApplicationContext(), getResources().getString(R.string.add_new_point_done), Toast.LENGTH_LONG);
-                    AddActivity.this.finish();
-                }
-            });
-            SharedPreferencesManager prefManager = new SharedPreferencesManager(AddActivity.this);
-            photoB64.replaceAll("[\n\r]", "");
-            PointEntity pointEntity = new PointEntity(location.getLongitude(), location.getLatitude(), (double)ratingBar.getRating(), editName.getText().toString(), editLocality.getText().toString(), editDescription.getText().toString(), photoB64, IMAGE_MIMETYPE, 1, Long.valueOf(prefManager.getPreferenceString(PREFERENCE_USERID)));
-            pointsHelper.postPoint(getResources().getString(R.string.add_new_point_dialog), pointEntity);
-        }
-        else{
-            SnackbarManager.showSnackbar(AddActivity.this, getResources().getString(R.string.add_new_point_pending), Snackbar.LENGTH_LONG);
+        if(InputValidation.validatePointName(editName) && InputValidation.validateLocality(editLocality) && InputValidation.validateDescription(editDescription)){
+            if(photoB64 != null && location != null){
+                PointsHelper pointsHelper = new PointsHelper(AddActivity.this, new RestTaskDelegate() {
+                    @Override
+                    public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                        ToastManager.showToast(getApplicationContext(), getResources().getString(R.string.add_new_point_done), Toast.LENGTH_LONG);
+                        AddActivity.this.finish();
+                    }
+                });
+                SharedPreferencesManager prefManager = new SharedPreferencesManager(AddActivity.this);
+                photoB64.replaceAll("[\n\r]", "");
+                PointEntity pointEntity = new PointEntity(location.getLongitude(), location.getLatitude(), (double)ratingBar.getRating(), editName.getText().toString(), editLocality.getText().toString(), editDescription.getText().toString(), photoB64, IMAGE_MIMETYPE, typeEntityArrayList.get(spinnerTypes.getSelectedItemPosition()).getId(), Long.valueOf(prefManager.getPreferenceString(PREFERENCE_USERID)));
+                pointsHelper.postPoint(getResources().getString(R.string.add_new_point_dialog), pointEntity);
+            }
+            else{
+                SnackbarManager.showSnackbar(AddActivity.this, getResources().getString(R.string.add_new_point_pending), Snackbar.LENGTH_LONG);
+            }
         }
     }
 }

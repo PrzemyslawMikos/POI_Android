@@ -4,19 +4,22 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import additional.InputValidation;
 import delegates.RestTaskDelegate;
 import constants.MainConstants;
 import constants.RestConstants;
 import entity.StatusEntity;
 import entity.UserEntity;
 import rest.RegisterHelper;
-//TODO walidacja inputów
+
 public class RegisterActivity extends AppCompatActivity implements RestConstants, MainConstants {
 
     private RegisterHelper registerHelper;
@@ -46,21 +49,23 @@ public class RegisterActivity extends AppCompatActivity implements RestConstants
     }
 
     private void register(){
-        UserEntity userEntity = new UserEntity(editNickname.getText().toString(), editEmail.getText().toString(), editPhone.getText().toString(), editUsername.getText().toString(), editPassword.getText().toString());
-        registerHelper = new RegisterHelper(RegisterActivity.this, new RestTaskDelegate() {
-            @Override
-            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-                if(result.getStatusCode() == HttpStatus.OK){
-                    Toast t = Toast.makeText(getApplicationContext(), R.string.register_complete, Toast.LENGTH_LONG);
-                    t.show();
-                    RegisterActivity.this.finish();
+        if(InputValidation.validateNickname(editNickname) && InputValidation.validateEmail(editEmail) && InputValidation.validatePhone(editPhone) && InputValidation.validteUsername(editUsername) && InputValidation.validatePassword(editPassword)){
+            UserEntity userEntity = new UserEntity(editNickname.getText().toString(), editEmail.getText().toString(), editPhone.getText().toString(), editUsername.getText().toString(), editPassword.getText().toString());
+            registerHelper = new RegisterHelper(RegisterActivity.this, new RestTaskDelegate() {
+                @Override
+                public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                    if(result.getStatusCode() == HttpStatus.OK){
+                        Toast t = Toast.makeText(getApplicationContext(), R.string.register_complete, Toast.LENGTH_LONG);
+                        t.show();
+                        RegisterActivity.this.finish();
+                    }
+                    else{
+                        showMessages(registerHelper.getRestHelper().getStatus());
+                    }
                 }
-                else{
-                    showMessages(registerHelper.getRestHelper().getStatus());
-                }
-            }
-        });
-        registerHelper.registerServer(getResources().getString(R.string.register_dialog_text), userEntity);
+            });
+            registerHelper.registerServer(getResources().getString(R.string.register_dialog_text), userEntity);
+        }
     }
 
     private void showMessages(StatusEntity entity){

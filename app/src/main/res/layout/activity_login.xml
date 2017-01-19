@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/login_activity_username"
+                android:focusable="true"
                 android:text="user"
                 android:ems="10"
                 android:id="@+id/editTextLogin" />
@@ -44,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:focusable="true"
                 android:ems="10"
                 android:text="user"
                 android:id="@+id/editTextPassword"

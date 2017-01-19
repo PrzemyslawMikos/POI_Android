@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import constants.RestConstants;
 import entity.TypeEntity;
+import task.PictureLoader;
 
 /**
  * Created by Przemek on 08.01.2017.

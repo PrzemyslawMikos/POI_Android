@@ -1,4 +1,4 @@
-package additional;
+package dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.adventure.poi.poi_android.R;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
+
+import additional.SharedPreferencesManager;
 import constants.MainConstants;
 import delegates.RestTaskDelegate;
 import entity.PointEntity;

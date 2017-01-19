@@ -14,6 +14,8 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
+
+import dialog.InfoUserDialog;
 import additional.MenuHelper;
 import additional.PointsRowAdapter;
 import additional.SharedPreferencesManager;
@@ -123,7 +125,8 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
         menuHelper.getById(R.id.manu_user_data_element).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                InfoUserDialog infoUserDialog = new InfoUserDialog(MenuActivity.this);
+                infoUserDialog.show();
             }
         });
         menuHelper.getById(R.id.manu_logout_element).setOnClickListener(new View.OnClickListener() {
@@ -163,6 +166,12 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
                 mode = 2;
                 textMenu.setText(String.format(getResources().getString(R.string.mainmenu_points_title), selectedType.getName(), selectedLocality));
             }
+        });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {}
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {}
         });
     }
 

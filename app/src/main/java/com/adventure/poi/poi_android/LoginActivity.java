@@ -16,6 +16,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import additional.InputValidation;
 import additional.PermissionHelper;
 import additional.SharedPreferencesManager;
 import additional.SnackbarManager;
@@ -25,8 +27,8 @@ import constants.RestConstants;
 import entity.StatusEntity;
 import entity.TokenEntity;
 import rest.LoginHelper;
-//TODO walidacja inputów
-public class LoginActivity extends AppCompatActivity implements RestConstants, MainConstants {
+
+public class LoginActivity extends AppCompatActivity implements RestConstants, MainConstants{
 
     private LoginHelper loginHelper;
     private EditText editLogin, editPassword;
@@ -50,7 +52,9 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     public void onLoginClick(View v){
         Context applicationContext = getApplicationContext();
         if(PermissionHelper.checkLocationPermission(applicationContext) && PermissionHelper.checkWriteExternalStoragePermission(applicationContext) && PermissionHelper.checkCameraPermission(applicationContext)){
-            login(editLogin.getText().toString(), editPassword.getText().toString());
+            if(InputValidation.validteUsername(editLogin) && InputValidation.validatePassword(editPassword)){
+                login(editLogin.getText().toString(), editPassword.getText().toString());
+            }
         }
         else{
             SnackbarManager.showSnackbarWithOptionIntent(LoginActivity.this, getResources().getString(R.string.permissions_request), getResources().getString(R.string.application_options), Snackbar.LENGTH_LONG, PermissionHelper.getApplicationPermissionsSettings(applicationContext));

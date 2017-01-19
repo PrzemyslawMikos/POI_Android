@@ -30,7 +30,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
-import additional.MapPointDialog;
+import dialog.MapPointDialog;
 import additional.NetworkStateManager;
 import additional.PermissionHelper;
 import additional.SnackbarManager;

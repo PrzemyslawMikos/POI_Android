@@ -1,4 +1,4 @@
-package additional;
+package task;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

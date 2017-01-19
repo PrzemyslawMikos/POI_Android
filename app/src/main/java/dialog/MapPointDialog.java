@@ -1,4 +1,4 @@
-package additional;
+package dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -14,6 +14,8 @@ import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import task.ImageManager;
 import constants.MainConstants;
 import constants.RestConstants;
 import delegates.ImageTaskDelegate;
