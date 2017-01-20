@@ -181,6 +181,9 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
             @Override
             public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
                 listPoints = pointsHelper.getPoints();
+                if(listPoints.size() < limit){
+                    flagLoading = true;
+                }
                 fillListPoints(listPoints);
             }
         });
@@ -192,9 +195,14 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
             @Override
             public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
                 listPoints = pointsHelper.getPoints();
+                if(listPoints.size() < limit){
+                    flagLoading = true;
+                }
+                else{
+                    flagLoading = false;
+                }
                 pAdapter.addToList(listPoints);
                 pAdapter.notifyDataSetChanged();
-                flagLoading = false;
             }
         });
         pointsHelper.getPointsCriteria(getResources().getString(R.string.point_searching), typeid, locality, limit, offset);
