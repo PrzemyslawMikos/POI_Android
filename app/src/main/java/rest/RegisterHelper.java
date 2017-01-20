@@ -6,6 +6,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 import constants.RestConstants;
 import delegates.RestTaskDelegate;
 import entity.UserEntity;
@@ -33,6 +35,7 @@ public class RegisterHelper implements RestConstants{
         try{
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
             restHelper = new RestHelper(REST_REGISTER_POST, HttpMethod.POST, headers, userEntity.toJSON(), activity, message, new RestTaskDelegate() {
                 @Override
                 public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {

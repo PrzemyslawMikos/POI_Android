@@ -3,7 +3,7 @@ package additional;
 import constants.TextsConstants;
 
 /**
- * Created by Przemek on 29.12.2016.
+ * Created by Przemysław Mikos on 29.12.2016.
  */
 
 public class GeoAddress implements TextsConstants{

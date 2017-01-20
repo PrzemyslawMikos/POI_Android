@@ -11,7 +11,7 @@ import delegates.GoogleLocationTaskDelegate;
 import entity.PointEntity;
 
 /**
- * Created by Przemek on 29.12.2016.
+ * Created by Przemysław Mikos on 29.12.2016.
  */
 
 public class GoogleLocation extends AsyncTask<PointEntity, GeoAddress, GeoAddress> {

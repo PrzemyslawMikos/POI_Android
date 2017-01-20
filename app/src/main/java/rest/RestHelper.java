@@ -22,6 +22,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import java.nio.charset.Charset;
 import additional.NetworkStateManager;
 import additional.SharedPreferencesManager;
 import constants.MainConstants;
@@ -31,7 +32,7 @@ import entity.StatusEntity;
 import entity.TokenEntity;
 
 /**
- * Created by Przemek on 04.12.2016.
+ * Created by Przemysław Mikos on 04.12.2016.
  */
 
 public class RestHelper implements RestTaskDelegate, RestConstants, MainConstants {
@@ -148,24 +149,21 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
             context = activity;
             dialog = new ProgressDialog(context);
             dialog.setCancelable(false);
-//            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//                @Override
-//                public void onCancel(DialogInterface dialog) {
-//                    cancel(true);
-//                }
-//            });
             this.delegate = delegate;
         }
 
         protected void onPreExecute() {
             this.dialog.setMessage(loadDialogMessage);
-            this.dialog.show();
+            if(!activity.isDestroyed()){
+                this.dialog.show();
+            }
         }
 
         @Override
         protected ResponseEntity<String> doInBackground(Void... params) {
             try {
                 RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
                 HttpEntity<String> entity;
                 if(requestBody != null) {
                     entity = new HttpEntity<>(requestBody.toString(), requestHeader);

@@ -1,4 +1,4 @@
-package additional;
+package task;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,7 +7,7 @@ import java.net.URL;
 import delegates.ImageTaskDelegate;
 
 /**
- * Created by Przemek on 13.12.2016.
+ * Created by Przemysław Mikos on 13.12.2016.
  */
 
 public class ImageManager implements ImageTaskDelegate {

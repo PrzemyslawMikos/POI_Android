@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import constants.RestConstants;
 
 /**
- * Created by Przemek on 04.12.2016.
+ * Created by Przemysław Mikos on 04.12.2016.
  */
 
 public class TokenEntity implements RestConstants {

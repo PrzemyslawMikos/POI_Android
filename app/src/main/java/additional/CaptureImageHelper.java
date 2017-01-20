@@ -18,7 +18,7 @@ import constants.MainConstants;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by Przemek on 13.01.2017.
+ * Created by Przemysław Mikos on 13.01.2017.
  */
 
 public class CaptureImageHelper implements MainConstants{
@@ -77,7 +77,6 @@ public class CaptureImageHelper implements MainConstants{
     public Bitmap checkRotation(Bitmap bitmap, String photoPath) throws IOException {
         ExifInterface exifInterface = new ExifInterface(photoPath);
         int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-        //TODO nie zadziała dla wszystkich telefonów
         switch(orientation) {
             case ExifInterface.ORIENTATION_ROTATE_90:
                 return rotateImage(bitmap, 90);

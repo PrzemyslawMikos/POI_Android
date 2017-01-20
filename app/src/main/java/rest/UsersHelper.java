@@ -16,7 +16,7 @@ import entity.StatusEntity;
 import entity.UserEntity;
 
 /**
- * Created by Przemek on 28.12.2016.
+ * Created by Przemysław Mikos on 28.12.2016.
  */
 
 public class UsersHelper extends EntityHelper {

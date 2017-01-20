@@ -17,7 +17,7 @@ import entity.PointEntity;
 import entity.StatusEntity;
 
 /**
- * Created by Przemek on 12.12.2016.
+ * Created by Przemysław Mikos on 12.12.2016.
  */
 
 public class PointsHelper extends EntityHelper{
@@ -32,28 +32,6 @@ public class PointsHelper extends EntityHelper{
     public ArrayList<PointEntity> getPoints() {
         return points;
     }
-
-//    public void getPointById(String message, Long id){
-//        HttpHeaders header = getHeaderWithBearer();
-//        restHelper = new RestHelper(String.format(REST_POINTS_GET_ID, id), HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
-//            @Override
-//            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-//
-//                    if (restHelper.getResponseEntity().getStatusCode() == HttpStatus.OK) {
-//                        String spoint = restHelper.getResponseEntity().getBody();
-//                        JSONObject jpoint= new JSONObject(spoint);
-//                        PointEntity point = new PointEntity(jpoint);
-//                        points.add(point);
-//                    }
-//
-//                else{
-//
-//                }
-//                PointsHelper.super.getDelegate().TaskCompletionResult(restHelper.getResponseEntity());
-//            }
-//        });
-//        restHelper.runTask();
-//    }
 
     public void getPointsCriteria(String message, int typeid, String locality, int limit, int offset){
         HttpHeaders header = getHeaderWithBearer();

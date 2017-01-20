@@ -6,7 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by Przemek on 23.12.2016.
+ * Created by Przemysław Mikos on 23.12.2016.
  */
 
 public final class NetworkStateManager{
@@ -18,5 +18,4 @@ public final class NetworkStateManager{
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
 }

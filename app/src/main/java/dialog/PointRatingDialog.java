@@ -1,4 +1,4 @@
-package additional;
+package dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.adventure.poi.poi_android.R;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
+
+import additional.SharedPreferencesManager;
 import constants.MainConstants;
 import delegates.RestTaskDelegate;
 import entity.PointEntity;
@@ -16,7 +18,7 @@ import entity.RatingEntity;
 import rest.RatingsHelper;
 
 /**
- * Created by Przemek on 12.01.2017.
+ * Created by Przemysław Mikos on 12.01.2017.
  */
 
 public class PointRatingDialog implements MainConstants {

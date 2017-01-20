@@ -7,6 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 import constants.RestConstants;
 import delegates.RestTaskDelegate;
 
@@ -33,6 +35,7 @@ public class LoginHelper implements RestConstants{
         try{
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
             JSONObject request = new JSONObject();
             request.put(JSON_USERNAME_KEY, login);
             request.put(JSON_PASSWORD_KEY, password);

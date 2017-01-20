@@ -16,12 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
-        android:text="asjdnakjsndkjansd"
         android:layout_toRightOf="@id/imageViewPointPicture" />
     <TextView
         android:id="@+id/textViewPointDescription"
         android:layout_width="wrap_content"
-        android:text="asjdnakjsndkjansd"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imageViewPointPicture"
         android:layout_below="@id/textViewPointName" />
@@ -34,4 +32,20 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:textSize="8dp" />
+    <ImageView
+        android:layout_marginTop="8dp"
+        android:id="@+id/star_image_point"
+        android:background="@drawable/ic_half_star"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/imageViewPointPicture"
+        android:layout_below="@id/textViewPointDescription" />
+    <TextView
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="8dp"
+        android:id="@+id/textViewPointRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/star_image_point"
+        android:layout_below="@id/textViewPointDescription" />
 </RelativeLayout>

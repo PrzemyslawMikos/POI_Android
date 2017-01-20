@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">POI</string>
+    <string name="app_name">Zobacz to!</string>
     <string name="server_exception">Błąd serwera, sprubój ponownie póżniej.</string>
+
+    <string name="user_data">Twoje dane: %1$s</string>
+    <string name="user_info_data">Nick: %1$s\nNazwa użtykownika: %2$s\nEmail: %3$s\nNr. telefonu: %4$s\nData dołączenia: %5$s</string>
+
+    <string name="permissions_request">Nadaj zezwolenia!</string>
+    <string name="application_options">Opcje aplikacji</string>
 
     <string name="login_dialog_text">Logowanie...</string>
     <string name="login_snackbar_bad_credentials">Nie zalogowano. Błędne dane logowania.</string>
@@ -14,7 +20,7 @@
     <string name="register_complete">Rejestracja przebiegła pomyślnie. Zaloguj się.</string>
 
     <string name="point_bad_url">Błędne dane do pobrania zdjęcia.</string>
-    <string name="point_criteria_not_found">Nie znaleziono żadnych punktów.</string>
+    <string name="point_criteria_not_found">Nie znaleziono.</string>
     <string name="point_added">Punkt został dodany pomyślnie.</string>
     <string name="point_searching">Wyszukiwanie punktów...</string>
     <string name="point_google_locality">Lokalizacja według Google</string>
@@ -29,7 +35,7 @@
 
     <string name="google_address_no_data">Brak danych</string>
 
-    <string name="types_not_found">Nie znaleziono punktów z wybranymi kryteriami.</string>
+    <string name="types_not_found">Nie znaleziono typu.</string>
     <string name="types_downloading">Pobieranie kategorii...</string>
 
     <string name="enable_network_text">Musisz mieć dostęp do internetu.\nWłącz Wi-Fi lub dane komórkowe.</string>
@@ -38,7 +44,12 @@
     <string name="downloading_user_data">Pobieranie Twoich danych</string>
     <string name="user_not_found">Nie znaleziono Twoich danych</string>
 
-    <string name="navigation_activity_type_title">Kategorie</string>
+    <string name="mainmenu_type_title">Wybierz kategorię</string>
+    <string name="mainmenu_points_title">Kategoria: %1$s Lokalizacja: %2$s</string>
+    <string name="mainmenu_none">brak</string>
+    <string name="main_menu_select_locality">Wpisz nazwę miejscowości</string>
+
+    <string name="navigation_activity_type_title">Wybierz kategorię</string>
     <string name="navigation_activity_point_title">Punkty: %1$s</string>
     <string name="all_points">Wszystkie najnowsze</string>
     <string name="rest_server_unavailable">Serwer niedostępny, sprubój ponownie później.</string>
@@ -57,21 +68,30 @@
     <string name="register_activity_password">Hasło</string>
     <string name="register_activity_register">Zarejestruj</string>
 
-    <string name="menu_category_list">Lista kategorii</string>
-    <string name="menu_google_map">Widok mapy</string>
+    <string name="menu_category_list">Według kategorii</string>
+    <string name="menu_google_map">W Twojej okolicy</string>
     <string name="menu_user_data">Twoje dane</string>
+    <string name="menu_add_point">Dodaj punkt</string>
     <string name="menu_logout">Wyloguj się</string>
 
+    <string name="add_new_preparing_picture">Przygotowywanie zdjęcia...</string>
+    <string name="add_new_point_dialog">Dodawanie punktu...</string>
+    <string name="add_new_point_pending">Trwa jeszcze zbieranie danych.</string>
+    <string name="add_new_point_done">Punkt został dodany</string>
+    <string name="add_point_name">Nazwa miejsca zainteresowania</string>
+    <string name="add_type_name">Kategoria:</string>
+    <string name="add_picture">Zdjęcie</string>
+    <string name="add_locality">Lokalizacja (nazwa miejscowości)</string>
+    <string name="add_description">Opis (co ciekawego można tu zobaczyć/zrobić)</string>
+    <string name="add_add_button">Dodaj</string>
+
     <string name="map_menu_distance">%1$d m</string>
-    <!--BLAAAAAAAAAAAAAAAAAAAAAAAAAAA tutaj ok-->
+    <string name="map_searching_dialog">W promieniu: %1$dm</string>
+    <string name="map_request_location">Musisz włączyć usługę lokalizacji(GPS).\nPrzejdz do ustawień.</string>
+    <string name="map_dialog_rating">Ocena: %1$s</string>
+    <string name="map_downloading_data">Pobieranie danych</string>
 
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
     <string name="title_activity_point_view">PointViewActivity</string>
-    <string name="large_text">Bla bla</string>
     <string name="title_activity_point">PointActivity</string>
     <string name="title_activity_map">Map</string>
 </resources>

@@ -3,20 +3,34 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:gravity="center"
+    android:minWidth="300dp"
     android:padding="20dp">
-    <TextView
-        android:id="@+id/map_dialog_point_name"
-        android:textSize="18dp"
-        android:text="Nazwa punktu Bang"
+    <RelativeLayout
+        android:layout_marginBottom="15dp"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/map_dialog_point_name"
+            android:textSize="20sp"
+            android:layout_alignParentStart="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/map_dialog_point_rating"
+            android:textSize="18sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <ImageView
         android:id="@+id/map_dialog_point_picture"
         android:layout_width="wrap_content"
         android:src="@mipmap/logo_dark"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_height="150dp" />
     <View style="@style/Divider"/>
     <LinearLayout
@@ -26,17 +40,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_weight="1.02"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageButton
                 android:text="Oceń"
-                android:background="@drawable/ic_google"
+                android:background="@drawable/ic_half_star_map"
                 android:id="@+id/buttonMapRate"
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_weight="1"
             android:gravity="center"
@@ -46,8 +61,7 @@
                 android:id="@+id/buttonNaviMap"
                 android:layout_height="30dp"
                 android:layout_width="30dp"
-                android:background="@drawable/ic_google"
-                android:text="Nawigacja"
+                android:background="@drawable/ic_map_navi"
                 android:focusable="false" />
         </LinearLayout>
         <LinearLayout
@@ -58,12 +72,10 @@
             <ImageButton
                 android:id="@+id/buttonDetailsMap"
                 android:layout_height="30dp"
-                android:background="@drawable/ic_google"
+                android:background="@drawable/ic_more"
                 android:layout_width="30dp"
                 android:text="Szczegóły"
                 android:focusable="false" />
         </LinearLayout>
     </LinearLayout>
-
-
 </LinearLayout>

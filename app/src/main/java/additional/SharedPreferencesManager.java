@@ -8,7 +8,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by Przemysław Mikos on 12.12.2016.
  */
-// TODO hasło nie może być zapisane jako czysty tekst !!
+
 public class SharedPreferencesManager implements MainConstants{
 
     private Context context;

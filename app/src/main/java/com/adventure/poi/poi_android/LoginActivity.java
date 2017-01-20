@@ -1,6 +1,7 @@
 package com.adventure.poi.poi_android;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.design.widget.Snackbar;
@@ -15,19 +16,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import additional.InputValidation;
+import additional.PermissionHelper;
 import additional.SharedPreferencesManager;
+import additional.SnackbarManager;
 import delegates.RestTaskDelegate;
 import constants.MainConstants;
 import constants.RestConstants;
 import entity.StatusEntity;
 import entity.TokenEntity;
 import rest.LoginHelper;
-//TODO walidacja inputów
-public class LoginActivity extends AppCompatActivity implements RestConstants, MainConstants {
+
+public class LoginActivity extends AppCompatActivity implements RestConstants, MainConstants{
 
     private LoginHelper loginHelper;
     private EditText editLogin, editPassword;
     private CheckBox checkBoxRememberMe;
+    private boolean isRemember = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +51,26 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     }
 
     public void onLoginClick(View v){
-        login(editLogin.getText().toString(), editPassword.getText().toString());
+        Context applicationContext = getApplicationContext();
+        if(PermissionHelper.checkLocationPermission(applicationContext) && PermissionHelper.checkWriteExternalStoragePermission(applicationContext) && PermissionHelper.checkCameraPermission(applicationContext)){
+            if(InputValidation.validteUsername(editLogin) && InputValidation.validatePassword(editPassword)){
+                login(editLogin.getText().toString(), editPassword.getText().toString());
+            }
+        }
+        else{
+            SnackbarManager.showSnackbarWithOptionIntent(LoginActivity.this, getResources().getString(R.string.permissions_request), getResources().getString(R.string.application_options), Snackbar.LENGTH_LONG, PermissionHelper.getApplicationPermissionsSettings(applicationContext));
+        }
     }
 
     public void onRegisterClick(View v){
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
+        Context applicationContext = getApplicationContext();
+        if(PermissionHelper.checkLocationPermission(applicationContext) && PermissionHelper.checkWriteExternalStoragePermission(applicationContext) && PermissionHelper.checkCameraPermission(applicationContext)){
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        }
+        else{
+            SnackbarManager.showSnackbarWithOptionIntent(LoginActivity.this, getResources().getString(R.string.permissions_request), getResources().getString(R.string.application_options), Snackbar.LENGTH_LONG, PermissionHelper.getApplicationPermissionsSettings(applicationContext));
+        }
     }
 
     @Override
@@ -77,9 +97,7 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
                    TokenEntity token = new TokenEntity(jtoken);
                    saveToken(token);
                    saveCredentials();
-                   // TODO zmienić po testach
-                   //Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-                   Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+                   Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                    LoginActivity.this.finish();
                    startActivity(intent);
                }
@@ -92,9 +110,16 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     }
 
     private void loginIfRemember(){
-        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
-        if(sharedPreferencesManager.getPreferenceBoolean(MainConstants.PREFERENCE_REMEMBER_ME)){
-            login(sharedPreferencesManager.getPreferenceString(PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(PREFERENCE_PASSWORD));
+        Context applicationContext = getApplicationContext();
+        if(PermissionHelper.checkLocationPermission(applicationContext) && PermissionHelper.checkWriteExternalStoragePermission(applicationContext) && PermissionHelper.checkCameraPermission(applicationContext)){
+            SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
+            if(sharedPreferencesManager.getPreferenceBoolean(MainConstants.PREFERENCE_REMEMBER_ME)){
+                isRemember = true;
+                login(sharedPreferencesManager.getPreferenceString(PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(PREFERENCE_PASSWORD));
+            }
+        }
+        else{
+            SnackbarManager.showSnackbarWithOptionIntent(LoginActivity.this, getResources().getString(R.string.permissions_request), getResources().getString(R.string.application_options), Snackbar.LENGTH_LONG, PermissionHelper.getApplicationPermissionsSettings(applicationContext));
         }
     }
 
@@ -112,9 +137,11 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     }
 
     private void saveCredentials(){
-        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
-        sharedPreferencesManager.setCredentials(editLogin.getText().toString(), editPassword.getText().toString());
-        sharedPreferencesManager.setKeyValueBoolean(MainConstants.PREFERENCE_REMEMBER_ME, checkBoxRememberMe.isChecked());
+        if(!isRemember){
+            SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
+            sharedPreferencesManager.setCredentials(editLogin.getText().toString(), editPassword.getText().toString());
+            sharedPreferencesManager.setKeyValueBoolean(MainConstants.PREFERENCE_REMEMBER_ME, checkBoxRememberMe.isChecked());
+        }
     }
 
     private void saveToken(TokenEntity token){

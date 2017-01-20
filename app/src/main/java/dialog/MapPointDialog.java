@@ -1,36 +1,31 @@
-package additional;
+package dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-
+import com.adventure.poi.poi_android.PointActivity;
 import com.adventure.poi.poi_android.R;
-
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import task.ImageManager;
 import constants.MainConstants;
 import constants.RestConstants;
 import delegates.ImageTaskDelegate;
 import delegates.RestTaskDelegate;
 import entity.PointEntity;
-import entity.RatingEntity;
 import google.GoogleNavi;
-import rest.RatingsHelper;
-
-import static constants.RestConstants.REST_POINTS_IMAGE;
+import rest.TypesHelper;
 
 /**
- * Created by Przemek on 12.01.2017.
+ * Created by Przemysław Mikos on 12.01.2017.
  */
 
 public class MapPointDialog implements MainConstants, RestConstants {
@@ -41,7 +36,7 @@ public class MapPointDialog implements MainConstants, RestConstants {
     private ImageView imageViewPointPicture;
     private Activity activity;
     private PointEntity point;
-    private RatingsHelper ratingsHelper;
+    private TypesHelper typesHelper;
 
     public MapPointDialog(Activity activity, PointEntity point){
         this.activity = activity;
@@ -56,6 +51,8 @@ public class MapPointDialog implements MainConstants, RestConstants {
 
         TextView textViewPointName = (TextView) mapDialog.findViewById(R.id.map_dialog_point_name);
         textViewPointName.setText(point.getName());
+        TextView textViewPointRating = (TextView) mapDialog.findViewById(R.id.map_dialog_point_rating);
+        textViewPointRating.setText(String.format(activity.getResources().getString(R.string.map_dialog_rating), Double.toString(point.getRating())));
 
         imageViewPointPicture = (ImageView) mapDialog.findViewById(R.id.map_dialog_point_picture);
         ImageManager imageManager = new ImageManager(new ImageTaskDelegate() {
@@ -92,7 +89,16 @@ public class MapPointDialog implements MainConstants, RestConstants {
         buttonMapDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO wywołanie aktywności point_activity pobranie typu i pokazanie danych punktu
+                typesHelper = new TypesHelper(activity, new RestTaskDelegate() {
+                    @Override
+                    public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                        Intent intent = new Intent(activity, PointActivity.class);;
+                        intent.putExtra(SERIAlIZABLE_POINT, point);
+                        intent.putExtra(SERIAlIZABLE_TYPE, typesHelper.getTypes().get(0));
+                        activity.startActivity(intent);
+                    }
+                });
+                typesHelper.getTypeById(activity.getResources().getString(R.string.map_downloading_data), point.getTypeid());
             }
         });
     }

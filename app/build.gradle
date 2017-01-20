@@ -26,7 +26,6 @@ dependencies {
     })
     // Spring RestApi
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
-
     compile 'com.sothree.slidinguppanel:library:3.3.1'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'

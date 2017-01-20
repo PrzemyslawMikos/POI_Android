@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import constants.RestConstants;
 import entity.TypeEntity;
+import task.PictureLoader;
 
 /**
  * Created by Przemek on 08.01.2017.
@@ -19,22 +20,19 @@ import entity.TypeEntity;
 
 public class TypesRowAdapter extends ArrayAdapter<TypeEntity> implements RestConstants{
 
-    Context context;
-    int layoutId;
     private LayoutInflater layoutInflater;
-    ArrayList<TypeEntity> data = null;
+    private ArrayList<TypeEntity> data = null;
 
     public TypesRowAdapter(Context context, int layoutId, ArrayList<TypeEntity> data) {
-        super(context,layoutId, data);
+        super(context, layoutId, data);
         layoutInflater = LayoutInflater.from(context);
-        this.context = context;
         this.data = data;
-        this.layoutId = layoutId;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         RowTypeEntity holder;
+        TypeEntity object = data.get(position);
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.row_list_types, null);
             holder = new RowTypeEntity();
@@ -46,8 +44,6 @@ public class TypesRowAdapter extends ArrayAdapter<TypeEntity> implements RestCon
         } else {
             holder = (RowTypeEntity) convertView.getTag();
         }
-
-        TypeEntity object = data.get(position);
         holder.textViewName.setText(object.getName());
         holder.textViewDescription.setText(object.getDescription());
         holder.textViewDate.setText(object.getAddeddate());
@@ -66,5 +62,4 @@ public class TypesRowAdapter extends ArrayAdapter<TypeEntity> implements RestCon
         ImageView imageViewImage;
         TextView textViewName, textViewDescription, textViewDate;
     }
-
 }
