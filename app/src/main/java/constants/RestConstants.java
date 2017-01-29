@@ -7,11 +7,11 @@ package constants;
 public interface RestConstants {
 
     // Główna sciezka hosta
-    String REST_MAIN_HOST_PATH = "http://192.168.1.8";
+    String REST_MAIN_HOST_PATH = "http://85.255.11.238";
     // Sciezki Rest API
-    String REST_ROOT_PATH = REST_MAIN_HOST_PATH + "/POI/Web/app_dev.php/api";
+    String REST_ROOT_PATH = REST_MAIN_HOST_PATH + "/api";
     // Sciezka zdjęć
-    String REST_IMAGE_PATH = REST_MAIN_HOST_PATH +"/POI/Web/uploads";
+    String REST_IMAGE_PATH = REST_MAIN_HOST_PATH +"/uploads";
     // Sciezka zdjęć typów
     String REST_TYPES_IMAGE = REST_IMAGE_PATH + "/types/%1$s";
     // Sciezka zdjęć punktów

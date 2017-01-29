@@ -88,7 +88,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp">
                 <ImageView
-                    android:src="@drawable/ic_category"
+                    android:src="@drawable/ic_category_black"
                     android:layout_height="wrap_content"
                     android:layout_width="80dp"
                     android:layout_weight="0.7"

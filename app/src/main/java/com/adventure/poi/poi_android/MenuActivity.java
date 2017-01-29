@@ -106,6 +106,7 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
             public void onClick(View view) {
                 getTypes();
                 setTypesMode();
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
         menuHelper.getById(R.id.manu_google_element).setOnClickListener(new View.OnClickListener() {

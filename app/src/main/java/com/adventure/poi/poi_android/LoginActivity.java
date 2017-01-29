@@ -16,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import additional.InputValidation;
 import additional.PermissionHelper;
 import additional.SharedPreferencesManager;

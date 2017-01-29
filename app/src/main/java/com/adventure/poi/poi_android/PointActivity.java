@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,6 +29,7 @@ public class PointActivity extends AppCompatActivity implements RestConstants, M
 
     private Toolbar toolbar;
     private TextView textPointLocation, textPointDescription, textPointName, textPointLocality, textPointRating, textPointAddeddate, textTypeName, textTypeDescription, textTypeAddeddate;
+    private ImageView imagePoint;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private PointEntity point;
     private TypeEntity type;
@@ -53,6 +55,8 @@ public class PointActivity extends AppCompatActivity implements RestConstants, M
         textTypeAddeddate = (TextView) findViewById(R.id.textViewTypeAddeddate);
         textPointRating = (TextView) findViewById(R.id.textViewPointRating);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setBackgroundResource(R.color.colorAccentDark);
+        imagePoint = (ImageView) findViewById(R.id.point_image);
         setSupportActionBar(toolbar);
     }
 
@@ -93,7 +97,7 @@ public class PointActivity extends AppCompatActivity implements RestConstants, M
         ImageManager im = new ImageManager(new ImageTaskDelegate() {
             @Override
             public void TaskCompletionResult(Bitmap result) {
-                collapsingToolbarLayout.setBackground(new BitmapDrawable(getResources(),result));
+                imagePoint.setImageBitmap(result);
             }
         });
 
