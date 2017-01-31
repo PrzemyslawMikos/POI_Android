@@ -1,7 +1,7 @@
 package com.adventure.poi.poi_android;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -119,6 +119,9 @@ public class PointActivity extends AppCompatActivity implements RestConstants, M
                 }
             }
         });
-        googleLocation.execute(point);
+        Location location = new Location("");
+        location.setLongitude(point.getLongitude());
+        location.setLatitude(point.getLatitude());
+        googleLocation.execute(location);
     }
 }

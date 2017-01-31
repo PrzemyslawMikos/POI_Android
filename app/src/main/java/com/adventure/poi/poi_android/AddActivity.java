@@ -1,7 +1,9 @@
 package com.adventure.poi.poi_android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,8 +19,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 import additional.CaptureImageHelper;
+import additional.GeoAddress;
 import additional.InputValidation;
 import additional.SingleLocationHelper;
+import delegates.GoogleLocationTaskDelegate;
+import google.GoogleLocation;
 import task.PhotoToBase64;
 import additional.SharedPreferencesManager;
 import additional.SnackbarManager;
@@ -80,21 +85,33 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
     }
 
     private void collectData(){
-        singleLocationHelper = new SingleLocationHelper(AddActivity.this, getResources().getString(R.string.location_download), new LocationDelegate() {
-            @Override
-            public void TaskCompletionResult(Location result) {
-                location = result;
-                singleLocationHelper.stopLocationManager(getApplicationContext());
-                typesHelper.getAllTypes(getResources().getString(R.string.types_downloading));
-            }
-        });
         typesHelper = new TypesHelper(AddActivity.this, new RestTaskDelegate() {
             @Override
             public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
                 fillSpinner(typesHelper.getTypesNamesList());
                 typeEntityArrayList = typesHelper.getTypes();
+                LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+                if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    singleLocationHelper = new SingleLocationHelper(AddActivity.this, getResources().getString(R.string.location_download), new LocationDelegate() {
+                        @Override
+                        public void TaskCompletionResult(Location result) {
+                            location = result;
+                            GoogleLocation googleLocation = new GoogleLocation(AddActivity.this.getApplicationContext(), new GoogleLocationTaskDelegate() {
+                                @Override
+                                public void TaskCompletionResult(GeoAddress geoResult) {
+                                    if(geoResult != null){
+                                        editLocality.setText(geoResult.getCity() == null ? "" : geoResult.getCity());
+                                    }
+                                }
+                            });
+                            googleLocation.execute(location);
+                            singleLocationHelper.stopLocationManager(getApplicationContext());
+                        }
+                    });
+                }
             }
         });
+        typesHelper.getAllTypes(getResources().getString(R.string.types_downloading));
     }
 
     private void fillSpinner(List<String> listTypes){
@@ -113,23 +130,45 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
         ratingBar = (RatingBar) findViewById(R.id.ratingRatingBar);
     }
 
+    private void sendPoint(){
+        PointsHelper pointsHelper = new PointsHelper(AddActivity.this, new RestTaskDelegate() {
+            @Override
+            public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
+                ToastManager.showToast(getApplicationContext(), getResources().getString(R.string.add_new_point_done), Toast.LENGTH_LONG);
+                AddActivity.this.finish();
+            }
+        });
+        SharedPreferencesManager prefManager = new SharedPreferencesManager(AddActivity.this);
+        photoB64.replaceAll("[\n\r]", "");
+        PointEntity pointEntity = new PointEntity(location.getLongitude(), location.getLatitude(), (double)ratingBar.getRating(), editName.getText().toString(), editLocality.getText().toString(), editDescription.getText().toString(), photoB64, IMAGE_MIMETYPE, typeEntityArrayList.get(spinnerTypes.getSelectedItemPosition()).getId(), Long.valueOf(prefManager.getPreferenceString(PREFERENCE_USERID)));
+        pointsHelper.postPoint(getResources().getString(R.string.add_new_point_dialog), pointEntity);
+    }
+
     public void onSendClick(View v){
         if(InputValidation.validatePointName(editName) && InputValidation.validateLocality(editLocality) && InputValidation.validateDescription(editDescription)){
             if(photoB64 != null && location != null){
-                PointsHelper pointsHelper = new PointsHelper(AddActivity.this, new RestTaskDelegate() {
-                    @Override
-                    public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
-                        ToastManager.showToast(getApplicationContext(), getResources().getString(R.string.add_new_point_done), Toast.LENGTH_LONG);
-                        AddActivity.this.finish();
-                    }
-                });
-                SharedPreferencesManager prefManager = new SharedPreferencesManager(AddActivity.this);
-                photoB64.replaceAll("[\n\r]", "");
-                PointEntity pointEntity = new PointEntity(location.getLongitude(), location.getLatitude(), (double)ratingBar.getRating(), editName.getText().toString(), editLocality.getText().toString(), editDescription.getText().toString(), photoB64, IMAGE_MIMETYPE, typeEntityArrayList.get(spinnerTypes.getSelectedItemPosition()).getId(), Long.valueOf(prefManager.getPreferenceString(PREFERENCE_USERID)));
-                pointsHelper.postPoint(getResources().getString(R.string.add_new_point_dialog), pointEntity);
+                sendPoint();
             }
             else{
-                SnackbarManager.showSnackbar(AddActivity.this, getResources().getString(R.string.add_new_point_pending), Snackbar.LENGTH_LONG);
+                if(location == null){
+                    LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+                    if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        singleLocationHelper = new SingleLocationHelper(AddActivity.this, getResources().getString(R.string.location_download), new LocationDelegate() {
+                            @Override
+                            public void TaskCompletionResult(Location result) {
+                                location = result;
+                                singleLocationHelper.stopLocationManager(getApplicationContext());
+                                sendPoint();
+                            }
+                        });
+                    }
+                    else{
+                        SnackbarManager.showSnackbarWithSettings(AddActivity.this, getResources().getString(R.string.map_request_location), Snackbar.LENGTH_LONG);
+                    }
+                }
+                else{
+                    SnackbarManager.showSnackbar(AddActivity.this, getResources().getString(R.string.add_new_point_pending), Snackbar.LENGTH_LONG);
+                }
             }
         }
     }

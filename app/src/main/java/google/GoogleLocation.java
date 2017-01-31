@@ -3,18 +3,17 @@ package google;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import java.util.List;
 import java.util.Locale;
 import additional.GeoAddress;
 import delegates.GoogleLocationTaskDelegate;
-import entity.PointEntity;
-
 /**
  * Created by Przemysław Mikos on 29.12.2016.
  */
 
-public class GoogleLocation extends AsyncTask<PointEntity, GeoAddress, GeoAddress> {
+public class GoogleLocation extends AsyncTask<Location, GeoAddress, GeoAddress> {
 
     private Context context;
     private GoogleLocationTaskDelegate delegate;
@@ -25,7 +24,7 @@ public class GoogleLocation extends AsyncTask<PointEntity, GeoAddress, GeoAddres
     }
 
     @Override
-    protected GeoAddress doInBackground(PointEntity... params) {
+    protected GeoAddress doInBackground(Location... params) {
         try{
             Geocoder geocoder;
             List<Address> addresses;

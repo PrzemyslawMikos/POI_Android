@@ -23,6 +23,7 @@ public class PictureLoader extends AsyncTask <URL, Void, Bitmap> {
     protected Bitmap doInBackground(URL... params) {
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(params[0].openConnection().getInputStream());
+            System.gc();
             return bitmap;
         }
         catch (Exception e){

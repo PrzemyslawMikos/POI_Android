@@ -45,7 +45,7 @@
     <string name="user_not_found">Nie znaleziono Twoich danych</string>
 
     <string name="mainmenu_type_title">Wybierz kategorię</string>
-    <string name="mainmenu_points_title">Kategoria: %1$s Lokalizacja: %2$s</string>
+    <string name="mainmenu_points_title">Kategoria: %1$s \nLokalizacja: %2$s</string>
     <string name="mainmenu_none">brak</string>
     <string name="main_menu_select_locality">Wpisz nazwę miejscowości</string>
 

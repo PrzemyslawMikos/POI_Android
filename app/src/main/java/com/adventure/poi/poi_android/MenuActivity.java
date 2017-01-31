@@ -1,6 +1,9 @@
 package com.adventure.poi.poi_android;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +17,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
-
+import additional.SnackbarManager;
 import dialog.InfoUserDialog;
 import additional.MenuHelper;
 import additional.PointsRowAdapter;
@@ -119,8 +122,14 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
         menuHelper.getById(R.id.manu_add_element).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MenuActivity.this, AddActivity.class);
-                startActivity(intent);
+                LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+                if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    Intent intent = new Intent(MenuActivity.this, AddActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    SnackbarManager.showSnackbarWithSettings(MenuActivity.this, getResources().getString(R.string.map_request_location), Snackbar.LENGTH_LONG);
+                }
             }
         });
         menuHelper.getById(R.id.manu_user_data_element).setOnClickListener(new View.OnClickListener() {
