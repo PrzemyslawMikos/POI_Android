@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.adventure.poi.poi_android.MapActivity;
 import com.adventure.poi.poi_android.PointActivity;
 import com.adventure.poi.poi_android.R;
 import org.json.JSONException;
@@ -59,9 +61,9 @@ public class MapPointDialog implements MainConstants, RestConstants {
             @Override
             public void TaskCompletionResult(Bitmap result) {
                 imageViewPointPicture.setImageBitmap(result);
-                mapDialog.show();
             }
         });
+        mapDialog.show();
         try{
             URL url = new URL(String.format(REST_POINTS_IMAGE, point.getPicture()));
             imageManager.runTask(url);
@@ -98,8 +100,9 @@ public class MapPointDialog implements MainConstants, RestConstants {
                         activity.startActivity(intent);
                     }
                 });
-                typesHelper.getTypeById(activity.getResources().getString(R.string.map_downloading_data), point.getTypeid());
+                typesHelper.getTypeById(activity.getResources().getString(R.string.map_downloading_data), point.getTypeid(), true);
             }
         });
     }
+
 }

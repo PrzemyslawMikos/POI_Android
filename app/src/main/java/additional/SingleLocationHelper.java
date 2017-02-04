@@ -26,6 +26,7 @@ public class SingleLocationHelper implements LocationListener {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
             this.dialog = new ProgressDialog(activity);
             this.dialog.setMessage(dialogMessage);
+            this.dialog.setCancelable(false);
             this.dialog.show();
         }
     }

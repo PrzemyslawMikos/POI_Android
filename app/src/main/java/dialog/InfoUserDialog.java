@@ -42,7 +42,7 @@ public class InfoUserDialog implements MainConstants {
             }
         });
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(activity);
-        usersHelper.getUserById(activity.getResources().getString(R.string.downloading_user_data), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_USERID));
+        usersHelper.getUserById(activity.getResources().getString(R.string.downloading_user_data), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_USERID), true);
 
     }
 }

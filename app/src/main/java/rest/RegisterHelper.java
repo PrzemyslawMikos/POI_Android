@@ -31,7 +31,7 @@ public class RegisterHelper implements RestConstants{
         return restHelper;
     }
 
-    public void registerServer(String message, UserEntity userEntity){
+    public void registerServer(String message, UserEntity userEntity, boolean dialogCancelable){
         try{
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -41,7 +41,7 @@ public class RegisterHelper implements RestConstants{
                 public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
                     delegate.TaskCompletionResult(result);
                 }
-            });
+            }, dialogCancelable);
             restHelper.runTask();
         }
         catch (Exception e){

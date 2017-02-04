@@ -32,7 +32,7 @@ public class UsersHelper extends EntityHelper {
         return users;
     }
 
-    public void getUserById(String message, String id){
+    public void getUserById(String message, String id, boolean dialogCancelable){
         HttpHeaders header = super.getHeaderWithBearer();
         restHelper = new RestHelper(String.format(REST_USERS_GET_ID, Long.valueOf(id)), HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
             @Override
@@ -48,7 +48,7 @@ public class UsersHelper extends EntityHelper {
                     showMessages(restHelper.getStatus());
                 }
             }
-        });
+        }, dialogCancelable);
         restHelper.runTask();
     }
 

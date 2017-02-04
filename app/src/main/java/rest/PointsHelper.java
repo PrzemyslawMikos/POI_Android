@@ -33,7 +33,7 @@ public class PointsHelper extends EntityHelper{
         return points;
     }
 
-    public void getPointsCriteria(String message, int typeid, String locality, int limit, int offset){
+    public void getPointsCriteria(String message, int typeid, String locality, int limit, int offset, boolean dialogCancelable){
         HttpHeaders header = getHeaderWithBearer();
         restHelper = new RestHelper(String.format(REST_POINTS_CRITERIA, typeid, locality, limit, offset), HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
             @Override
@@ -52,11 +52,11 @@ public class PointsHelper extends EntityHelper{
                     showMessages(restHelper.getStatus());
                 }
             }
-        });
+        }, dialogCancelable);
         restHelper.runTask();
     }
 
-    public void getPointsDistance(String message, double latitude, double longitude, int distance){
+    public void getPointsDistance(String message, double latitude, double longitude, int distance, boolean dialogCancelable){
         HttpHeaders header = getHeaderWithBearer();
         restHelper = new RestHelper(String.format(REST_POINTS_DISTANCE, latitude, longitude, distance), HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
             @Override
@@ -75,11 +75,11 @@ public class PointsHelper extends EntityHelper{
                     showMessages(restHelper.getStatus());
                 }
             }
-        });
+        }, dialogCancelable);
         restHelper.runTask();
     }
 
-    public void postPoint(String message, PointEntity point){
+    public void postPoint(String message, PointEntity point, boolean dialogCancelable){
         HttpHeaders header = getHeaderWithBearer();
         restHelper = new RestHelper(REST_POINTS_POST, HttpMethod.POST, header, point.toJSON(), super.getActivity(), message, new RestTaskDelegate() {
             @Override
@@ -92,7 +92,7 @@ public class PointsHelper extends EntityHelper{
                     showMessages(restHelper.getStatus());
                 }
             }
-        });
+        }, dialogCancelable);
         restHelper.runTask();
     }
 

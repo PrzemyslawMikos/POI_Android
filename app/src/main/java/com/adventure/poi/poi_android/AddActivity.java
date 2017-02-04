@@ -21,6 +21,7 @@ import java.util.List;
 import additional.CaptureImageHelper;
 import additional.GeoAddress;
 import additional.InputValidation;
+import additional.PermissionHelper;
 import additional.SingleLocationHelper;
 import delegates.GoogleLocationTaskDelegate;
 import google.GoogleLocation;
@@ -56,6 +57,11 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        if (!PermissionHelper.checkLocationPermission(this.getApplicationContext()) || !PermissionHelper.checkCameraPermission(this.getApplicationContext()) || !PermissionHelper.checkWriteExternalStoragePermission(this.getApplicationContext())) {
+            Toast.makeText(this.getApplicationContext(), getResources().getString(R.string.permissions_request), Toast.LENGTH_LONG).show();
+            this.finish();
+            return;
+        }
         assignControls();
         captureImageHelper = new CaptureImageHelper(AddActivity.this);
         captureImageHelper.startTakingPhoto();
@@ -111,7 +117,7 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
                 }
             }
         });
-        typesHelper.getAllTypes(getResources().getString(R.string.types_downloading));
+        typesHelper.getAllTypes(getResources().getString(R.string.types_downloading), false);
     }
 
     private void fillSpinner(List<String> listTypes){
@@ -141,7 +147,7 @@ public class AddActivity extends AppCompatActivity implements MainConstants {
         SharedPreferencesManager prefManager = new SharedPreferencesManager(AddActivity.this);
         photoB64.replaceAll("[\n\r]", "");
         PointEntity pointEntity = new PointEntity(location.getLongitude(), location.getLatitude(), (double)ratingBar.getRating(), editName.getText().toString(), editLocality.getText().toString(), editDescription.getText().toString(), photoB64, IMAGE_MIMETYPE, typeEntityArrayList.get(spinnerTypes.getSelectedItemPosition()).getId(), Long.valueOf(prefManager.getPreferenceString(PREFERENCE_USERID)));
-        pointsHelper.postPoint(getResources().getString(R.string.add_new_point_dialog), pointEntity);
+        pointsHelper.postPoint(getResources().getString(R.string.add_new_point_dialog), pointEntity, false);
     }
 
     public void onSendClick(View v){

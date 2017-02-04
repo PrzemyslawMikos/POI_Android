@@ -29,7 +29,7 @@
     <ImageView
         android:id="@+id/map_dialog_point_picture"
         android:layout_width="wrap_content"
-        android:src="@mipmap/logo_dark"
+        android:src="@mipmap/loading"
         android:layout_marginBottom="15dp"
         android:layout_height="150dp" />
     <View style="@style/Divider"/>

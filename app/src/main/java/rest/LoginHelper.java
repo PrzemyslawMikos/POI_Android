@@ -31,7 +31,7 @@ public class LoginHelper implements RestConstants{
         return restHelper;
     }
 
-    public void loginServer(String message, String login, String password){
+    public void loginServer(String message, String login, String password, boolean dialogCancelable){
         try{
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -44,7 +44,7 @@ public class LoginHelper implements RestConstants{
                 public void TaskCompletionResult(ResponseEntity<String> result) throws JSONException {
                     delegate.TaskCompletionResult(result);
                 }
-            });
+            }, dialogCancelable);
             restHelper.runTask();
         }
         catch (Exception e){

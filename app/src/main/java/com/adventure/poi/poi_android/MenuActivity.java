@@ -159,7 +159,7 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
                     fillListTypes();
                 }
             });
-            typesHelper.getAllTypes(getResources().getString(R.string.types_downloading));
+            typesHelper.getAllTypes(getResources().getString(R.string.types_downloading), true);
         }
         setTitle(getResources().getString(R.string.navigation_activity_type_title));
     }
@@ -197,7 +197,7 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
                 fillListPoints(listPoints);
             }
         });
-        pointsHelper.getPointsCriteria(getResources().getString(R.string.point_searching), typeid, locality, limit, offset);
+        pointsHelper.getPointsCriteria(getResources().getString(R.string.point_searching), typeid, locality, limit, offset, true);
     }
 
     private void getMorePoints(int typeid, String locality){
@@ -215,7 +215,7 @@ public class MenuActivity extends AppCompatActivity implements RestConstants, Ma
                 pAdapter.notifyDataSetChanged();
             }
         });
-        pointsHelper.getPointsCriteria(getResources().getString(R.string.point_searching), typeid, locality, limit, offset);
+        pointsHelper.getPointsCriteria(getResources().getString(R.string.point_searching), typeid, locality, limit, offset, true);
     }
 
     private void fillListPoints(ArrayList<PointEntity> points){

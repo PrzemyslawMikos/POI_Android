@@ -3,6 +3,7 @@ package rest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.provider.Settings;
@@ -46,8 +47,9 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
     private ResponseEntity<String> responseEntity;
     private RestTaskDelegate delegate;
     private StatusEntity status = null;
+    private boolean dialogCancelable;
 
-    public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, JSONObject requestBody, Activity activity, String loadDialogMessage, RestTaskDelegate delegate) {
+    public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, JSONObject requestBody, Activity activity, String loadDialogMessage, RestTaskDelegate delegate, boolean dialogCancelable) {
         this.urlPath = urlPath;
         this.requestMethod = requestMethod;
         this.requestHeader = requestHeader;
@@ -55,9 +57,10 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
         this.activity = activity;
         this.loadDialogMessage = loadDialogMessage;
         this.delegate = delegate;
+        this.dialogCancelable = dialogCancelable;
     }
 
-    public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, Activity activity, String loadDialogMessage, RestTaskDelegate delegate) {
+    public RestHelper(String urlPath, HttpMethod requestMethod, HttpHeaders requestHeader, Activity activity, String loadDialogMessage, RestTaskDelegate delegate, boolean dialogCancelable) {
         this.urlPath = urlPath;
         this.requestMethod = requestMethod;
         this.requestHeader = requestHeader;
@@ -65,6 +68,7 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
         this.activity = activity;
         this.loadDialogMessage = loadDialogMessage;
         this.delegate = delegate;
+        this.dialogCancelable = dialogCancelable;
     }
 
     private void setStatus(String statusText){
@@ -86,7 +90,7 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
 
     public void runTask() {
         if(NetworkStateManager.isNetworkAvailable(activity)){
-            RestTask restTask = new RestTask(activity, this);
+            RestTask restTask = new RestTask(activity, this, dialogCancelable);
             restTask.execute();
         }
         else{
@@ -132,7 +136,7 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
                 }
             });
             SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(activity);
-            loginHelper.loginServer(activity.getResources().getString(R.string.login_renew_token), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_PASSWORD));
+            loginHelper.loginServer(activity.getResources().getString(R.string.login_renew_token), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_USERNAME), sharedPreferencesManager.getPreferenceString(MainConstants.PREFERENCE_PASSWORD), false);
         }
         else{
             delegate.TaskCompletionResult(result);
@@ -144,11 +148,20 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
         private ProgressDialog dialog;
         private Context context;
         private RestTaskDelegate delegate;
+        private int cancel = 0;
 
-        public RestTask(Activity activity, RestTaskDelegate delegate) {
+        public RestTask(Activity activity, RestTaskDelegate delegate, boolean dialogCancelable) {
             context = activity;
             dialog = new ProgressDialog(context);
-            dialog.setCancelable(false);
+            dialog.setCancelable(dialogCancelable);
+            this.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    RestTask.this.cancel = 1;
+                    RestTask.this.cancel(true);
+                    RestTask.this.dialog.dismiss();
+                }
+            });
             this.delegate = delegate;
         }
 
@@ -206,8 +219,10 @@ public class RestHelper implements RestTaskDelegate, RestConstants, MainConstant
 
         @Override
         protected void onCancelled() {
-            Toast t = Toast.makeText(context, context.getResources().getString(R.string.rest_server_unavailable), Toast.LENGTH_LONG);
-            t.show();
+            if(this.cancel == 0){
+                Toast t = Toast.makeText(context, context.getResources().getString(R.string.rest_server_unavailable), Toast.LENGTH_LONG);
+                t.show();
+            }
         }
     }
 }

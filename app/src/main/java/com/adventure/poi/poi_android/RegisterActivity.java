@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements RestConstants
                     }
                 }
             });
-            registerHelper.registerServer(getResources().getString(R.string.register_dialog_text), userEntity);
+            registerHelper.registerServer(getResources().getString(R.string.register_dialog_text), userEntity, true);
         }
     }
 

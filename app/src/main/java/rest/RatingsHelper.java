@@ -23,7 +23,7 @@ public class RatingsHelper extends EntityHelper{
         super(activity, delegate);
     }
 
-    public void postRating(String message, RatingEntity ratingEntity){
+    public void postRating(String message, RatingEntity ratingEntity, boolean dialogCancelable){
         HttpHeaders header = getHeaderWithBearer();
         restHelper = new RestHelper(REST_RATINGS_POST, HttpMethod.POST, header, ratingEntity.toJSON(), super.getActivity(), message, new RestTaskDelegate() {
             @Override
@@ -36,7 +36,7 @@ public class RatingsHelper extends EntityHelper{
                     showMessages(restHelper.getStatus());
                 }
             }
-        });
+        }, dialogCancelable);
         restHelper.runTask();
     }
 

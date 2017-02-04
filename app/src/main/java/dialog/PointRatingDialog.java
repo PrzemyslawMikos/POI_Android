@@ -56,7 +56,7 @@ public class PointRatingDialog implements MainConstants {
                 });
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(activity.getApplicationContext());
                 RatingEntity ratingEntity = new RatingEntity(Math.round(ratingBar.getRating()), point.getId(), Long.parseLong(sharedPreferencesManager.getPreferenceString(PREFERENCE_USERID)));
-                ratingsHelper.postRating(activity.getResources().getString(R.string.rating_adding), ratingEntity);
+                ratingsHelper.postRating(activity.getResources().getString(R.string.rating_adding), ratingEntity, true);
                 ratingDialog.dismiss();
             }
         });

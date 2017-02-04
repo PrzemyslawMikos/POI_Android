@@ -42,7 +42,7 @@ public class TypesHelper extends EntityHelper{
         return listTypesNames;
     }
 
-    public void getTypeById(String message, long typeid){
+    public void getTypeById(String message, long typeid, boolean dialogCancelable){
         HttpHeaders header = super.getHeaderWithBearer();
         restHelper = new RestHelper(String.format(REST_TYPES_ID_GET, typeid), HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
             @Override
@@ -58,11 +58,11 @@ public class TypesHelper extends EntityHelper{
                     showMessages(restHelper.getStatus());
                 }
             }
-        });
+        }, dialogCancelable);
         restHelper.runTask();
     }
 
-    public void getAllTypes(String message){
+    public void getAllTypes(String message, boolean dialogCancelable){
         HttpHeaders header = super.getHeaderWithBearer();
         restHelper = new RestHelper(REST_TYPES_GET, HttpMethod.GET, header, super.getActivity(), message, new RestTaskDelegate() {
             @Override
@@ -81,7 +81,7 @@ public class TypesHelper extends EntityHelper{
                     showMessages(restHelper.getStatus());
                 }
             }
-        });
+        }, dialogCancelable);
         restHelper.runTask();
     }
 

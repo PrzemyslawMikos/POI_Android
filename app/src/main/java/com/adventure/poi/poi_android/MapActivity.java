@@ -1,14 +1,11 @@
 package com.adventure.poi.poi_android;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -63,10 +61,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     private void assignControls() {
-        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (!PermissionHelper.checkLocationPermission(this.getApplicationContext())) {
+            Toast.makeText(this.getApplicationContext(), getResources().getString(R.string.permissions_request), Toast.LENGTH_LONG).show();
+            this.finish();
             return;
         }
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 50,50, this);
         listMarkers = new ArrayList<>();
         textViewDistance = (TextView) findViewById(R.id.textViewDistance);
@@ -155,7 +155,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                         }
                     });
                     if(userLocation != null){
-                        pointsHelper.getPointsDistance(String.format(getResources().getString(R.string.map_searching_dialog), selectedDistance) , userLocation.getLatitude(), userLocation.getLongitude(), selectedDistance);
+                        pointsHelper.getPointsDistance(String.format(getResources().getString(R.string.map_searching_dialog), selectedDistance) , userLocation.getLatitude(), userLocation.getLongitude(), selectedDistance, true);
                     }
                 }
                 else{
@@ -247,4 +247,5 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
         return false;
     }
+
 }

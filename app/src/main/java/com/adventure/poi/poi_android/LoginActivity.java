@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.util.ArrayList;
 import additional.InputValidation;
 import additional.PermissionHelper;
 import additional.SharedPreferencesManager;
@@ -76,11 +77,7 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case PERMISSION: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
-
-                }
+                checkPermissions();
                 return;
             }
         }
@@ -105,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
                }
            }
        });
-        loginHelper.loginServer(getResources().getString(R.string.login_dialog_text), login, password);
+        loginHelper.loginServer(getResources().getString(R.string.login_dialog_text), login, password, true);
     }
 
     private void loginIfRemember(){
@@ -126,11 +123,16 @@ public class LoginActivity extends AppCompatActivity implements RestConstants, M
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
                 || (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
                 || (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ){
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
-            }
-            else{
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION);
+                || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED))
+        {
+            ArrayList<String> listPermission = new ArrayList<String>();
+            listPermission.add(Manifest.permission.CAMERA);
+            listPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            listPermission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            listPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            String[] array = (String[])listPermission.toArray(new String[listPermission.size()]);
+            if(array[0] != null){
+                ActivityCompat.requestPermissions(this, array, PERMISSION);
             }
         }
     }
